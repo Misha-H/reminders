@@ -85,15 +85,15 @@ nav > ul > li > a.active {
 }
 
 .searchbar > input {
-  border-radius: 0.75rem;
-  background-color: var(--primary-background-color);
+  border-radius: 0.5rem;
+  background-color: white;
   padding: 0.5rem 1rem;
   height: 2.5rem;
   flex: 1;
   display: flex;
   align-items: center;
   color: var(--primary-text-color);
-  border: 0;
+  border: 0.015rem solid black;
   box-shadow: var(--shadow);
 }
 
