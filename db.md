@@ -16,3 +16,8 @@ Hosted Document Database Server (MongoDB Atlas) 2 3 3 = 8
 
 - [Drizzle ORM](https://orm.drizzle.team/docs/)
 - [Sequelize](https://sequelize.org/docs/v7/)
+
+
+
+
+NEXT LESSON, SET UP DATABASE
