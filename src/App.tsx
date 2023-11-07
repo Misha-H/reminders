@@ -8,8 +8,6 @@ function App(): JSX.Element {
     <BrowserRouter>
       <DataContextProvider>
         <Routes>
-          {/* <Route path='/' element={<Home />} />
-          <Route path='/settings' element={<Settings />} /> */}
           {routes.map((route) => (
             <Route key={route.path} path={route.path} element={route.page()} />
           ))}
@@ -20,15 +18,3 @@ function App(): JSX.Element {
 }
 
 export default App;
-
-{
-  /* <div className='app'>
-  <Navbar />
-
-  <h1>Reminders</h1>
-
-  <Searchbar />
-
-  <TaskGroup />
-</div> */
-}

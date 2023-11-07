@@ -3,8 +3,6 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { Subtask } from '../../components';
 import ChevronDown from './ChevronDown';
 
-import './index.css';
-
 import type { Task } from '../../data';
 
 interface Props {
