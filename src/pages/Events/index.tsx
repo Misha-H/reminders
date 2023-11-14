@@ -2,44 +2,44 @@ import { Header, Card } from '../../components';
 
 export default function () {
   const fields = [
-    { title: 'Title', type: 'text' },
-    { title: 'Description', type: 'textarea' },
-    { title: 'Background Colour', type: 'color' },
-    { title: 'Mark Weight', type: 'number' },
-    { title: 'Date', type: 'date' },
+    { id: 'title', label: 'Title', type: 'text' },
+    { id: 'description', label: 'Description', type: 'textarea' },
+    { id: 'background-colour', label: 'Background Colour', type: 'color' },
+    { id: 'mark-weight', label: 'Mark Weight', type: 'number' },
+    { id: 'date', label: 'Date', type: 'date' },
   ];
 
   return (
-    <>
+    <div className='events-page'>
       <Header title='Add Reminder' />
 
       {fields.map((field) => (
-        <Card key={field.title}>
+        <Card key={field.label}>
           <div className='form-floating'>
             {field.type === 'textarea' ? (
               <textarea
-                id={field.title}
+                id={field.id}
                 className='form-control'
-                placeholder={field.title}
+                placeholder={field.label}
               ></textarea>
             ) : (
               <input
-                id={field.title}
+                id={field.id}
                 type={field.type}
                 className='form-control'
-                placeholder={field.title}
+                placeholder={field.label}
               />
             )}
-            <label htmlFor={field.title}>{field.title}</label>
+            <label htmlFor={field.id}>{field.label}</label>
           </div>
         </Card>
       ))}
 
-      <div>
-        <button>Exit</button>
-        <button>Confirm</button>
+      <div className='actions'>
+        <button className='bg-red'>Exit</button>
+        <button className='bg-green'>Confirm</button>
       </div>
-    </>
+    </div>
   );
 }
 

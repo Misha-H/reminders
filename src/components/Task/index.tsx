@@ -1,7 +1,4 @@
-import * as Accordion from '@radix-ui/react-accordion';
-
-import { Subtask } from '../../components';
-import ChevronDown from './ChevronDown';
+import { Subtask, Accordion } from '../../components';
 
 import type { Task } from '../../data';
 
@@ -11,7 +8,6 @@ interface Props {
 
 export default function (props: Props) {
   const { created_at, description, subtasks } = props.task;
-  const hasSubtasks = subtasks.length > 0;
 
   /**
    * Format a timestamp into an Australian standard date.
@@ -28,27 +24,15 @@ export default function (props: Props) {
   };
 
   return (
-    <Accordion.Root type='single' className='accordion-root' collapsible>
-      <Accordion.Item value='item-1' className='accordion-item'>
-        <Accordion.Header className='accordion-header'>
-          <Accordion.Trigger className='accordion-trigger'>
-            <div>
-              {hasSubtasks && <ChevronDown className='accordion-chevron' />}
-            </div>
-            <div className='subtask'>
-              <span className='description'>{description}</span>
-              <span className='date'>{formatDate(created_at)}</span>
-            </div>
-          </Accordion.Trigger>
-        </Accordion.Header>
-        {hasSubtasks && (
-          <Accordion.Content className='accordion-content'>
-            {subtasks.map((subtask) => (
-              <Subtask key={subtask.id} subtask={subtask} />
-            ))}
-          </Accordion.Content>
-        )}
-      </Accordion.Item>
-    </Accordion.Root>
+    <Accordion
+      content={subtasks.map((subtask) => (
+        <Subtask key={subtask.id} subtask={subtask} />
+      ))}
+    >
+      <div className='subtask'>
+        <span className='description'>{description}</span>
+        <span className='date'>{formatDate(created_at)}</span>
+      </div>
+    </Accordion>
   );
 }

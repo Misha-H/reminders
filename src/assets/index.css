@@ -16,6 +16,9 @@ body {
   --secondary-background-color: #f9f9f9;
   --primary-text-color: #1e1e1e;
   --shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
+  --color-red: #ffc8ca;
+  --color-green: #b3f1bf;
 }
 
 * {
@@ -33,6 +36,17 @@ body {
 .app > h1 {
   text-align: center;
   color: white;
+}
+
+/* 
+ * Theme
+ */
+.bg-red {
+  background-color: var(--color-red);
+}
+
+.bg-green {
+  background-color: var(--color-green);
 }
 
 /* 
@@ -180,6 +194,7 @@ h3 {
 }
 
 .accordion-trigger {
+  font-weight: bold;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -268,6 +283,30 @@ h3 {
 }
 
 /**
+ * Events Page
+ */
+.events-page > .actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1.75rem;
+}
+
+.events-page > .actions > button {
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  border: 0.015rem solid black;
+  box-shadow: var(--shadow);
+  text-align: center;
+  margin-right: 0.5rem;
+}
+
+.events-page > .actions > button:last-child {
+  flex-grow: 1;
+  margin-right: 0;
+}
+
+/**
  * Card
  */
 .card {
@@ -286,35 +325,13 @@ h3 {
  * Floating Label
  */
 
-/* .form-floating {
-  position: relative;
-}
-
-.form-floating > label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 1rem 0.75rem;
-  overflow: hidden;
-  text-align: start;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  pointer-events: none;
-  border: 1px solid transparent;
-  transform-origin: 0 0;
-  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
-} */
-
-/* TESTTTTTTTTTTTTTTTTTT */
-
 .form-floating {
   position: relative;
 }
 
 .form-floating > .form-control:focus,
 .form-floating > .form-control:not(:placeholder-shown) {
+  font-weight: bold;
   padding-top: 1.625rem;
   padding-bottom: 0.625rem;
 }
@@ -322,30 +339,22 @@ h3 {
 .form-floating > .form-control {
   padding: 1rem 0.75rem;
   height: calc(3.5rem + 2px);
-  line-height: 1.25;
+  min-height: calc(3.5rem + 2px);
 }
 
 .form-control:focus {
   color: #212529;
-  background-color: #fff;
-  border-color: #86b7fe;
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
 .form-control {
   display: block;
   width: 100%;
+  font-weight: bold;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
   color: #212529;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  -webkit-appearance: none;
-  appearance: none;
+  border: 0;
   margin: 0;
   resize: vertical;
   font-family: inherit;
@@ -355,23 +364,18 @@ h3 {
 
 .form-floating > .form-control:focus ~ label,
 .form-floating > .form-control:not(:placeholder-shown) ~ label {
+  font-weight: bold;
   opacity: 0.65;
   transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
 }
 
 .form-floating > label {
+  font-weight: bold;
+  padding: 1rem 0.75rem;
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 1rem 0.75rem;
   overflow: hidden;
-  text-align: start;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  pointer-events: none;
-  border: 1px solid transparent;
   transform-origin: 0 0;
   transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
 }
