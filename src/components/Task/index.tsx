@@ -29,7 +29,7 @@ export default function (props: Props) {
         <Subtask key={subtask.id} subtask={subtask} />
       ))}
     >
-      <div className='subtask'>
+      <div className='container'>
         <span className='description'>{description}</span>
         <span className='date'>{formatDate(created_at)}</span>
       </div>

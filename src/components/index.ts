@@ -6,5 +6,20 @@ import Navbar from './Navbar';
 import Header from './Header';
 import Card from './Card';
 import Accordion from './Accordion';
+import FormField from './FormField';
 
-export { Searchbar, Subtask, Task, TaskGroup, Navbar, Header, Card, Accordion };
+import type { FormFieldEnumItemType, FormFieldType } from './FormField';
+
+export {
+  Searchbar,
+  Subtask,
+  Task,
+  TaskGroup,
+  Navbar,
+  Header,
+  Card,
+  Accordion,
+  FormField,
+};
+
+export type { FormFieldEnumItemType, FormFieldType };

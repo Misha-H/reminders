@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 
-import { data } from '../data';
+import { data } from '~/data';
 
 import type { FC, PropsWithChildren } from 'react';
 

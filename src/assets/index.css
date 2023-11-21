@@ -270,29 +270,29 @@ h3 {
   transform: rotate(180deg);
 }
 
-.accordion-content > .subtask {
+.accordion-content > .container {
   padding: 0.5rem;
   border-radius: 0.5rem;
   color: var(--primary-text-color);
 }
 
-.accordion-content > .subtask:hover {
+.accordion-content > .container:hover {
   background-color: #fafafa;
   box-shadow: 0px 0px 12px #eee;
   color: black;
 }
 
 /**
- * Events Page
+ * Page
  */
-.events-page > .actions {
+.page > .actions {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-top: 1.75rem;
 }
 
-.events-page > .actions > button {
+.page > .actions > button {
   border-radius: 0.25rem;
   padding: 0.5rem 1rem;
   border: 0.015rem solid black;
@@ -301,9 +301,16 @@ h3 {
   margin-right: 0.5rem;
 }
 
-.events-page > .actions > button:last-child {
+.page > .actions > button:last-child {
   flex-grow: 1;
   margin-right: 0;
+}
+
+/**
+ * Settings Page
+ */
+.page .group {
+  margin-bottom: 1rem;
 }
 
 /**
@@ -382,4 +389,15 @@ h3 {
 
 label {
   display: inline-block;
+}
+
+/**
+ * Settings Page
+ */
+.settings.page > .actions {
+  justify-content: flex-end;
+}
+
+.settings.page > .actions > button {
+  flex-grow: 0;
 }

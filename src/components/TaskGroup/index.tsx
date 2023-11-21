@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
-import { Task } from '../';
-import { DataContext } from '../../context';
+import { Task } from '~/components';
+import { DataContext } from '~/context';
 
 // TODO: Display all tasks (and subtasks) in a nice fashion - refer to Figma
 export default function () {

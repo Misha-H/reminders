@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { DataContextProvider } from './context';
-import { routes } from './routes';
+import { DataContextProvider } from '~/context';
+import { routes } from '~/routes';
 
 function App(): JSX.Element {
   return (

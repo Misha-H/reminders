@@ -1,4 +1,4 @@
-import { Navbar } from '..';
+import { Navbar } from '~/components';
 
 interface HeaderProps {
   /**

@@ -1,4 +1,4 @@
-import { Header, TaskGroup, Searchbar } from '../../components';
+import { Header, TaskGroup, Searchbar } from '~/components';
 
 export default function () {
   return (

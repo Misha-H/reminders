@@ -1,8 +1,10 @@
-import { Header, Card } from '../../components';
+import { Header, Card, FormField } from '~/components';
+
+import type {FormFieldType} from '~/components';
 
 export default function () {
-  const fields = [
-    { id: 'title', label: 'Title', type: 'text' },
+  const fields: Array<FormFieldType> = [
+    { id: 'title', label: 'Title' },
     { id: 'description', label: 'Description', type: 'textarea' },
     { id: 'background-colour', label: 'Background Colour', type: 'color' },
     { id: 'mark-weight', label: 'Mark Weight', type: 'number' },
@@ -10,26 +12,18 @@ export default function () {
   ];
 
   return (
-    <div className='events-page'>
+    <div className='events page'>
       <Header title='Add Reminder' />
 
       {fields.map((field) => (
         <Card key={field.label}>
           <div className='form-floating'>
-            {field.type === 'textarea' ? (
-              <textarea
-                id={field.id}
-                className='form-control'
-                placeholder={field.label}
-              ></textarea>
-            ) : (
-              <input
-                id={field.id}
-                type={field.type}
-                className='form-control'
-                placeholder={field.label}
-              />
-            )}
+            <FormField
+              id={field.id}
+              label={field.label}
+              type={field.type}
+              placeholder={field.label}
+            />
             <label htmlFor={field.id}>{field.label}</label>
           </div>
         </Card>

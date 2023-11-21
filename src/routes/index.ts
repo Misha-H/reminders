@@ -1,4 +1,4 @@
-import { Home, Settings, Events } from '../pages';
+import { Home, Settings, Events } from '~/pages';
 
 export const routes = [
   { path: '/', name: 'Home', page: Home },

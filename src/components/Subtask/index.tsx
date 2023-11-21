@@ -1,4 +1,4 @@
-import type { Subtask } from '../../data';
+import type { Subtask } from '~/data';
 
 interface Props {
   subtask: Subtask;
@@ -8,5 +8,5 @@ interface Props {
 export default function (props: Props) {
   const { description } = props.subtask;
 
-  return <div className='subtask'>{description}</div>;
+  return <div className='container'>{description}</div>;
 }
