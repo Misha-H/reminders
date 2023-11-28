@@ -1,6 +1,6 @@
 import { Header, Card, FormField } from '~/components';
 
-import type {FormFieldType} from '~/components';
+import type { FormFieldType } from '~/components';
 
 export default function () {
   const fields: Array<FormFieldType> = [

@@ -14,7 +14,7 @@ export default function () {
                 title={route.name}
                 className={({ isActive }) => (isActive ? 'active' : '')}
               >
-                {route.name}
+                {({ isActive }) => isActive ? route.activeIcon() : route.icon()}
               </NavLink>
             </li>
           ))}
