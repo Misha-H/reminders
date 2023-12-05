@@ -12,9 +12,11 @@
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
     "@tauri-apps/api": "^1.5.0",
+    "drizzle-orm": "^0.29.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.17.0"
+    "react-router-dom": "^6.17.0",
+    "tauri-plugin-sql-api": "github:tauri-apps/tauri-plugin-sql#v1"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.0",
@@ -22,6 +24,7 @@
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
+    "drizzle-kit": "^0.20.6",
     "typescript": "^5.0.2",
     "vite": "^4.4.4"
   }
