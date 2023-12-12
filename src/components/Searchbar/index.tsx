@@ -1,8 +1,9 @@
 import { useContext } from 'react';
 
+import { Search } from '~/assets/icons';
 import { DataContext } from '~/context';
 
-import type { FormEvent } from 'react';
+import type { SyntheticEvent } from 'react';
 
 // TODO: Display all tasks (and subtasks) in a nice fashion - refer to Figma
 export default function () {
@@ -10,22 +11,30 @@ export default function () {
 
   // TODO: correct types
   // TODO: add function description
-  const handleSearch = (event: FormEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
-    const search = event.target.value.slice();
+  const handleSearch = (event: SyntheticEvent<HTMLInputElement>) => {
+    const { value } = event.target as HTMLInputElement;
+    console.log();
+    const search = value.slice();
     data.filter(search);
   };
 
   return (
     <div className='searchbar'>
-      <label htmlFor='searchbar'></label>
-      <input
-        type='text'
-        name='searchbar'
-        id='searchbar'
-        placeholder='🔍 search'
-        onInput={handleSearch}
-      />
+      <div className='icon'>
+        <Search />
+      </div>
+      <div className='form-floating'>
+        <input
+          id='searchbar'
+          placeholder='searchbar'
+          type='search'
+          className='form-control'
+          onInput={handleSearch}
+        />
+        <label htmlFor='searchbar' className='f'>
+          Search
+        </label>
+      </div>
     </div>
   );
 }

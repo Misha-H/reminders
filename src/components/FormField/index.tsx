@@ -1,4 +1,4 @@
-import type { HTMLInputTypeAttribute } from 'react';
+import type { HTMLInputTypeAttribute, ComponentProps } from 'react';
 
 export interface FormFieldEnumItemType {
   id: string;
@@ -6,14 +6,15 @@ export interface FormFieldEnumItemType {
   value: string;
 }
 
-export interface FormFieldType {
+type ElementTypes = ComponentProps<'textarea'> & ComponentProps<'select'> & ComponentProps<'input'>;
+
+export interface FormFieldType extends ElementTypes {
   id: string;
   label: string;
   /**
    * @default 'text'
    */
   type?: HTMLInputTypeAttribute | 'textarea' | 'dropdown';
-  placeholder?: string;
   /**
    * Array of items for dropdown.
    *
@@ -25,12 +26,18 @@ export interface FormFieldType {
 export default function (props: FormFieldType) {
   return props.type === 'textarea' ? (
     <textarea
+      {...props}
       id={props.id}
       className='form-control'
       placeholder={props.label}
     ></textarea>
   ) : props.type === 'dropdown' ? (
-    <select id={props.id} className='form-control' placeholder={props.label}>
+    <select
+      {...props}
+      id={props.id}
+      className='form-control'
+      placeholder={props.label}
+    >
       {props.enum &&
         props.enum.map((item) => (
           <option key={item.id} value={item.value}>
@@ -40,6 +47,7 @@ export default function (props: FormFieldType) {
     </select>
   ) : (
     <input
+      {...props}
       id={props.id}
       type={props.type || 'text'}
       className='form-control'

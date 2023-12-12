@@ -1,25 +1,34 @@
-Playpen Sans Variable Font
-==========================
+Nunito Variable Font
+====================
 
-This download contains Playpen Sans as both a variable font and static fonts.
+This download contains Nunito as both variable fonts and static fonts.
 
-Playpen Sans is a variable font with this axis:
+Nunito is a variable font with this axis:
   wght
 
-This means all the styles are contained in a single file:
-  PlaypenSans-VariableFont_wght.ttf
+This means all the styles are contained in these files:
+  Nunito-VariableFont_wght.ttf
+  Nunito-Italic-VariableFont_wght.ttf
 
 If your app fully supports variable fonts, you can now pick intermediate styles
 that aren’t available as static fonts. Not all apps support variable fonts, and
-in those cases you can use the static font files for Playpen Sans:
-  static/PlaypenSans-Thin.ttf
-  static/PlaypenSans-ExtraLight.ttf
-  static/PlaypenSans-Light.ttf
-  static/PlaypenSans-Regular.ttf
-  static/PlaypenSans-Medium.ttf
-  static/PlaypenSans-SemiBold.ttf
-  static/PlaypenSans-Bold.ttf
-  static/PlaypenSans-ExtraBold.ttf
+in those cases you can use the static font files for Nunito:
+  static/Nunito-ExtraLight.ttf
+  static/Nunito-Light.ttf
+  static/Nunito-Regular.ttf
+  static/Nunito-Medium.ttf
+  static/Nunito-SemiBold.ttf
+  static/Nunito-Bold.ttf
+  static/Nunito-ExtraBold.ttf
+  static/Nunito-Black.ttf
+  static/Nunito-ExtraLightItalic.ttf
+  static/Nunito-LightItalic.ttf
+  static/Nunito-Italic.ttf
+  static/Nunito-MediumItalic.ttf
+  static/Nunito-SemiBoldItalic.ttf
+  static/Nunito-BoldItalic.ttf
+  static/Nunito-ExtraBoldItalic.ttf
+  static/Nunito-BlackItalic.ttf
 
 Get started
 -----------
