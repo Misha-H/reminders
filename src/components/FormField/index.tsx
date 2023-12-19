@@ -21,6 +21,10 @@ export interface FormFieldType extends ElementTypes {
    * Only valid when `type` is equal to `'dropdown'`.
    */
   enum?: Array<FormFieldEnumItemType>;
+  /**
+   * Default value, or default selection determined by `id`.
+   */
+  defaultValue?: string;
 }
 
 export default function (props: FormFieldType) {
@@ -30,6 +34,7 @@ export default function (props: FormFieldType) {
       id={props.id}
       className='form-control'
       placeholder={props.label}
+      defaultValue={props.defaultValue}
     ></textarea>
   ) : props.type === 'dropdown' ? (
     <select
@@ -40,7 +45,7 @@ export default function (props: FormFieldType) {
     >
       {props.enum &&
         props.enum.map((item) => (
-          <option key={item.id} value={item.value}>
+          <option key={item.id} value={item.value} selected={item.id === props.defaultValue}>
             {item.label}
           </option>
         ))}
@@ -52,6 +57,7 @@ export default function (props: FormFieldType) {
       type={props.type || 'text'}
       className='form-control'
       placeholder={props.label}
+      defaultValue={props.defaultValue}
     />
   );
 }

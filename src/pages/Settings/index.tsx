@@ -1,3 +1,6 @@
+import { useState } from 'react';
+
+import { LocalStorage } from '~/utils';
 import { Accordion, FormField, Header } from '~/components';
 
 import type { FormFieldType } from '~/components';
@@ -9,6 +12,7 @@ interface Group {
 }
 
 export default function () {
+  const [settings, setSettings] = useState(LocalStorage.get());
   const groups: Array<Group> = [
     {
       id: 'theme',
@@ -27,6 +31,17 @@ export default function () {
           label: 'Font',
           type: 'dropdown',
           enum: [
+            {
+              id: 'font-nunito',
+              label: 'Nunito',
+              value: "'Nunito', Arial, sans-serif",
+            },
+            {
+              id: 'font-system',
+              label: 'System',
+              value:
+                "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, 'Open Sans', sans-serif",
+            },
             {
               id: 'font-monospace',
               label: 'Monospace',
@@ -49,11 +64,13 @@ export default function () {
           label: 'Text Size',
           type: 'dropdown',
           enum: [
-            { id: 'size-10', label: '10', value: '10' },
-            { id: 'size-11', label: '11', value: '11' },
             { id: 'size-12', label: '12', value: '12' },
             { id: 'size-13', label: '13', value: '13' },
             { id: 'size-14', label: '14', value: '14' },
+            { id: 'size-15', label: '15', value: '15' },
+            { id: 'size-16', label: '16', value: '16' },
+            { id: 'size-17', label: '17', value: '17' },
+            { id: 'size-18', label: '18', value: '18' },
           ],
         },
       ],
@@ -61,9 +78,8 @@ export default function () {
   ];
 
   const onReset = () => {
-    // TODO: Have some stateful context which tracks the current state of settings.
-    // Have default items in a context that can be used to revert changes.
-  }
+    LocalStorage.reset();
+  };
 
   return (
     <div className='settings page'>
@@ -82,6 +98,7 @@ export default function () {
                     label={field.label}
                     type={field.type}
                     enum={field.enum}
+                    defaultValue={settings[group.id][field.id]}
                   />,
                 ]}
               >
@@ -95,7 +112,9 @@ export default function () {
       ))}
 
       <div className='actions'>
-        <button className='bg-red fit' onClick={onReset}>Reset</button>
+        <button className='bg-red fit' onClick={onReset}>
+          Reset
+        </button>
       </div>
     </div>
   );

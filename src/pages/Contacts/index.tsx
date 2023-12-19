@@ -17,7 +17,7 @@ const contacts: Array<Contact> = [
   { name: 'Random Name5', description: 'Description5', phone: '0400 555 555' },
 ];
 
-const fields: Array<FormFieldType> = [
+const newContactFields: Array<FormFieldType> = [
   { id: 'name', label: 'Name' },
   { id: 'description', label: 'Description', type: 'textarea' },
   { id: 'phone', label: 'Phone Number', type: 'tel' },
@@ -32,7 +32,7 @@ export default function () {
         content={[
           <div>
             <form action=''>
-              {fields.map((field) => (
+              {newContactFields.map((field) => (
                 <div className='form-floating'>
                   <FormField
                     id={field.id}
@@ -46,7 +46,7 @@ export default function () {
 
               <input type='submit' value='Submit' />
             </form>
-          </div>,
+          </div>
         ]}
       >
         <div className='container'>
@@ -60,7 +60,7 @@ export default function () {
             <div>
               <p className='description'>{contact.phone}</p>
               <p className='description'>{contact.description}</p>
-            </div>,
+            </div>
           ]}
         >
           <div className='container'>

@@ -29,7 +29,6 @@ body {
 /* TODO: Change CSS `:focus` so that can make placeholder and label in center of field */
 .form-floating > .form-control,
 .form-floating > label {
-  background-color: red;
   display: flex;
   align-content: center;
 }
@@ -117,9 +116,21 @@ header h1 {
   flex-direction: row;
   align-items: center;
   border-radius: 0.5rem;
-  border: 0.015rem solid black;
   margin-bottom: 1rem;
   box-shadow: var(--shadow);
+  padding: 0 0.75rem;
+}
+
+/* 
+ * Icon
+ */
+.accordion-trigger > div,
+.accordion-trigger > div:first-child,
+.icon {
+  display: flex;
+  width: 1rem;
+  height: 100%;
+  align-items: center;
 }
 
 /* 
@@ -153,7 +164,6 @@ h3 {
 
 .accordion-root {
   border-radius: 0.25rem;
-  border: 0.015rem solid black;
   box-shadow: var(--shadow);
   color: black;
   margin-top: 1rem;
@@ -209,16 +219,6 @@ h3 {
   justify-content: center;
   height: calc(2rem);
   width: 100%;
-}
-
-.accordion-trigger > div {
-  display: flex;
-  height: 100%;
-  align-items: center;
-}
-
-.accordion-trigger > div:first-child {
-  width: 1rem;
 }
 
 .accordion-trigger > div:last-child {
@@ -303,7 +303,6 @@ h3 {
 .page > .actions > button {
   border-radius: 0.25rem;
   padding: 0.5rem 1rem;
-  border: 0.015rem solid black;
   box-shadow: var(--shadow);
   text-align: center;
   margin-right: 0.5rem;
@@ -325,15 +324,43 @@ h3 {
  * Contacts Page
  */
 .page.contacts .accordion-root:first-of-type {
-  background-color: var(--color-green);
+  /* background-color: var(--color-green); */
+  background-color: #d9f8df;
 }
+
+.page.contacts .accordion-root:first-of-type form {
+  /* background-color: red; */
+}
+
+.page.contacts .accordion-root:first-of-type .form-floating {
+  /* background-color: cyan; */
+  margin-bottom: 1rem;
+}
+
+.page.contacts .accordion-root:first-of-type .form-floating > .form-control {
+  /* background-color: lime; */
+  box-shadow: var(--shadow);
+  background-color: transparent;
+  /* border: 1px solid #90eaa1; */
+}
+
+/**
+ * Settings Page
+ */
+ .settings.page > .actions {
+  justify-content: flex-end;
+}
+
+.settings.page > .actions > button {
+  flex-grow: 0;
+}
+
 
 /**
  * Card
  */
 .card {
   border-radius: 0.25rem;
-  border: 0.015rem solid black;
   box-shadow: var(--shadow);
   color: black;
   margin-top: 1rem;
@@ -390,6 +417,7 @@ h3 {
   font-weight: bold;
   opacity: 0.65;
   transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+  height: auto;
 }
 
 .form-floating > label {
@@ -400,19 +428,12 @@ h3 {
   overflow: hidden;
   transform-origin: 0 0;
   transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }
 
 label {
   display: inline-block;
-}
-
-/**
- * Settings Page
- */
-.settings.page > .actions {
-  justify-content: flex-end;
-}
-
-.settings.page > .actions > button {
-  flex-grow: 0;
 }
