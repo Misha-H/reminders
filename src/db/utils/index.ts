@@ -22,9 +22,9 @@ import Database from 'tauri-plugin-sql-api';
 // );
 
 class Db {
-  private name: string = '';
-  private connection: Database | null = null;
-  public client = drizzle(async (sql, params, method) => {
+  private static name: string = '';
+  private static connection: Database | null = null;
+  public static client = drizzle(async (sql, params, method) => {
     try {
       // const rows = await axios.post('http://localhost:3000/query', { sql, params, method });
 
@@ -35,14 +35,16 @@ class Db {
     }
   });
 
-  private async connect() {
+  private static async connect() {
     this.connection = await Database.load(`sqlite:${this.name}`);
-  }
-
-  constructor(name: string) {
-    this.name = name;
   }
 }
 
 // Usage
 // const db = new Db('test.db');
+
+
+
+
+
+

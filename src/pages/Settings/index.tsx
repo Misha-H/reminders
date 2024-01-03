@@ -86,7 +86,7 @@ export default function () {
       <Header title='Settings' />
 
       {groups.map((group) => (
-        <div>
+        <div key={group.id}>
           <h2>{group.label}</h2>
 
           {group.fields.map((field) => (

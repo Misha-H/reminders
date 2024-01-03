@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 import { data } from '~/data';
 
@@ -15,6 +15,8 @@ export const DataContext = createContext(defaultContext);
 export const DataContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [data, setData] = useState(defaultContext.data);
   const [filteredData, setFilteredData] = useState(defaultContext.filteredData);
+
+  useEffect(() => {}, []);
 
   const context = {
     data,

@@ -33,7 +33,7 @@ export default function () {
           <div>
             <form action=''>
               {newContactFields.map((field) => (
-                <div className='form-floating'>
+                <div key={field.id} className='form-floating'>
                   <FormField
                     id={field.id}
                     label={field.label}
@@ -46,7 +46,7 @@ export default function () {
 
               <input type='submit' value='Submit' />
             </form>
-          </div>
+          </div>,
         ]}
       >
         <div className='container'>
@@ -56,11 +56,12 @@ export default function () {
 
       {contacts.map((contact) => (
         <Accordion
+          key={contact.name}
           content={[
             <div>
               <p className='description'>{contact.phone}</p>
               <p className='description'>{contact.description}</p>
-            </div>
+            </div>,
           ]}
         >
           <div className='container'>
