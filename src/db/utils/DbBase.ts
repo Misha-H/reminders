@@ -1,57 +1,92 @@
-import Database from 'tauri-plugin-sql-api';
 import { sql } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/sqlite-proxy';
+import Database from 'tauri-plugin-sql-api';
 
-class DbBase {
+import rawSql from '~/db/drizzle/0000_cuddly_arachne.sql?raw';
+
+export class DbBase {
   private static name: string = 'events.db';
+  private static hasInitSchemaThisConnection: boolean = false;
   private static connection: Database | null = null;
-  public static client = drizzle(async (sql, params, method) => {
+  public static client = drizzle(
+    async (sql, params, method) => {
+      try {
+        const connection = await this.getConnection();
+
+        /**
+         * Swap out placeholder types.
+         * `select ? from ?` -> `select $1 from $2`.
+         * @param rawQuery Raw SQL.
+         */
+        const swapPlaceholders = (rawQuery: string): string => {
+          let index = 1;
+          return rawQuery.replace(/\?/g, () => `$${index++}`);
+        };
+
+        const sqlWithSwappedPlaceholders = swapPlaceholders(sql);
+
+        if (method === 'run') {
+          const result = await connection.execute(
+            sqlWithSwappedPlaceholders,
+            params
+          );
+          return { rows: [result] };
+        } else {
+          const result = await connection.select<{ [key: string]: unknown }[]>(
+            sqlWithSwappedPlaceholders,
+            params
+          );
+          return { rows: result.map((row) => Object.values(row)) };
+        }
+      } catch (error: unknown) {
+        console.error('Error from sqlite proxy server: ', error);
+        return { rows: [] };
+      }
+    },
+    { logger: true }
+  );
+
+  private static async getConnection(): Promise<Database> {
     try {
-      return { rows: [] };
-    } catch (error: any) {
-      console.error('Error from sqlite proxy server: ', error);
-      return { rows: [] };
-    }
-  });
+      if (!this.connection) {
+        return await this.connect();
+      }
 
-  private static async getConnection(): Database {
-    if (!this.connection) {
-      throw new Error('Database not accessible.');
+      return this.connection;
+    } catch (error) {
+      throw new Error('cannot get connection to database.');
     }
-
-    return this.connection;
   }
 
-  private static async connect(): Promise<void> {
+  private static async connect(): Promise<Database> {
     try {
-      this.connection = await Database.load(`sqlite:${this.name}`);
+      if (!this.connection) {
+        this.connection = await Database.load(`sqlite:${this.name}`);
+      }
+
+      // Do initial stuff like adding initial schema to database
+      if (!this.hasInitSchemaThisConnection) {
+        // This will assume we either have all or none of the tables in the database
+        const query = sql`
+          select 1
+          from sqlite_master
+          where type = ${'table'}
+          limit 1
+        `;
+
+        const result = await this.client.all(query);
+
+        // If at least one table does exist
+        if (result.length === 0) {
+          const query = sql.raw(rawSql);
+          await this.client.run(query);
+          this.hasInitSchemaThisConnection = true;
+        }
+      }
+
+      return this.connection;
     } catch (error) {
       throw new Error('Database unavailable.');
     }
-  }
-
-  private static async init(): Promise<void> {
-    try {
-      await this.connect();
-
-      const query = sql`
-        SELECT
-          1
-        FROM
-          sqlite_master
-        WHERE
-          type = ${'table'}
-        LIMIT
-          1
-      `;
-
-      // TODO: Add client call
-    } catch (error) {
-      throw new Error('Cannot initialise database.');
-    }
-  }
-
-  constructor() {
-    DbBase.init();
   }
 }

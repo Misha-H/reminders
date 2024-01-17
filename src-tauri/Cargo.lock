@@ -3397,7 +3397,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-sql"
 version = "0.0.0"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v1#899c6262f82e5196caf01308caa678a653763328"
+source = "git+https://github.com/fatherbrennan/tauri-plugin-sql?branch=v1#6a389e48fedb526b7096e5e1f9cea0bd70dd7591"
 dependencies = [
  "futures-core",
  "log",
@@ -3405,6 +3405,7 @@ dependencies = [
  "serde_json",
  "sqlx",
  "tauri",
+ "tauri-build",
  "thiserror",
  "time",
  "tokio",

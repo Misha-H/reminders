@@ -1,4 +1,4 @@
-import { Header, TaskGroup, Searchbar } from '~/components';
+import { Header, Searchbar, TaskGroup } from '~/components';
 
 export default function () {
   return (
@@ -6,8 +6,6 @@ export default function () {
       <Header title='Reminders' />
       <Searchbar />
       <TaskGroup />
-      change margin on "Reminders" to be in line with rest <br></br>
-      change search bar height to be same as task box height <br></br>
     </div>
   );
 }

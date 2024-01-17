@@ -1,9 +1,10 @@
-import { Subtask, Accordion } from '../../components';
+import { Subtask, Accordion } from '~/components';
 
-import type { Task } from '../../data';
+// TODO: Update to work with the SQL database.
+// TODO: We want to remove the `data` contexts.
 
 interface Props {
-  task: Task;
+  task: any;
 }
 
 export default function (props: Props) {

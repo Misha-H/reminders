@@ -1,12 +1,16 @@
+import { sql } from 'drizzle-orm';
 import { text, integer, sqliteTable } from 'drizzle-orm/sqlite-core';
 
 // TODO: Update date to generate timestamp
 export const tasks = sqliteTable('tasks', {
-  task_id: integer('task_id').primaryKey(),
-  description: text('description', { mode: 'text', length: 510 }),
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  description: text('description', { mode: 'text', length: 1024 }),
+  isCompleted: integer('is_completed', { mode: 'boolean' })
+    .notNull()
+    .default(false),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
-    .default(new Date()),
+    .default(sql`(unixepoch())`),
 });
 
 export type Task = typeof tasks.$inferSelect;
