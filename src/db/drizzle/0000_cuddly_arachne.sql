@@ -16,7 +16,7 @@ CREATE TABLE `subtasks` (
 --> statement-breakpoint
 CREATE TABLE `tasks` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`description` text(1024),
+	`description` text(1024) NOT NULL,
 	`is_completed` integer DEFAULT false NOT NULL,
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL
 );

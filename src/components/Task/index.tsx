@@ -1,14 +1,17 @@
-import { Subtask, Accordion } from '~/components';
+import { useEffect, useState } from 'react';
 
-// TODO: Update to work with the SQL database.
-// TODO: We want to remove the `data` contexts.
+import { Subtask, Accordion } from '~/components';
+import { Db } from '~/db/utils/Db';
+
+import type { Task } from '~/db/schema/tasks'
 
 interface Props {
-  task: any;
+  task: Task;
 }
 
 export default function (props: Props) {
-  const { created_at, description, subtasks } = props.task;
+  const { createdAt, description, id, isCompleted } = props.task;
+  const [data, setData] = useState<Awaited<ReturnType<typeof Db['getSubtasks']>>>([]);
 
   /**
    * Format a timestamp into an Australian standard date.
@@ -24,15 +27,21 @@ export default function (props: Props) {
     return `${dd}/${mm}/${yyyy}`;
   };
 
+  useEffect(() => {
+    Db.getSubtasks(id).then(setData);
+  }, []);
+
+  // TODO: Think of the UX on how and where you would like the options to create/update/delete.
+
   return (
     <Accordion
-      content={subtasks.map((subtask) => (
+      content={data.map((subtask) => (
         <Subtask key={subtask.id} subtask={subtask} />
       ))}
     >
       <div className='container'>
         <span className='description'>{description}</span>
-        <span className='date'>{formatDate(created_at)}</span>
+        <span className='date'>{formatDate(createdAt)}</span>
       </div>
     </Accordion>
   );

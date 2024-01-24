@@ -1,18 +1,20 @@
 import { sql } from 'drizzle-orm';
-import { text, integer, sqliteTable } from 'drizzle-orm/sqlite-core';
+import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
-// TODO: Update date to generate timestamp
+import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
+
 export const tasks = sqliteTable('tasks', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  description: text('description', { mode: 'text', length: 1024 }),
+  description: text('description', { mode: 'text', length: 1024 }).notNull(),
   isCompleted: integer('is_completed', { mode: 'boolean' })
     .notNull()
     .default(false),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
+    .$type<number>()
     .default(sql`(unixepoch())`),
 });
 
-export type Task = typeof tasks.$inferSelect;
+export type Task = InferSelectModel<typeof tasks>;
 
-export type NewTask = typeof tasks.$inferInsert;
+export type NewTask = InferInsertModel<typeof tasks>;

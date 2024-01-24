@@ -17,12 +17,12 @@ const defaultContext = {
   currentSettings: null,
 };
 
-export const DataContext = createContext(defaultContext);
+export const SettingsContext = createContext(defaultContext);
 
-export const DataContextProvider: FC<PropsWithChildren> = ({ children }) => {
+export const SettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const context = { ...defaultContext };
 
   return (
-    <DataContext.Provider value={context}>{children}</DataContext.Provider>
+    <SettingsContext.Provider value={context}>{children}</SettingsContext.Provider>
   );
 };

@@ -1,4 +1,4 @@
-import type { Subtask } from '~/data';
+import type { Subtask } from '~/db/schema/subtasks';
 
 interface Props {
   subtask: Subtask;

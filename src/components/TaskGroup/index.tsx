@@ -6,7 +6,8 @@ import { Task } from '~/components';
 // TODO: Display all tasks (and subtasks) in a nice fashion - refer to Figma
 export default function () {
   const [data, setData] = useState<Awaited<ReturnType<typeof Db['getTasks']>>>([]);
-  
+
+  // `useEffect` is called when this component is mounted to the DOM.
   useEffect(() => {
     Db.getTasks().then(setData);
   }, []);

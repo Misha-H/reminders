@@ -1,18 +1,18 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { DataContextProvider } from '~/context';
+import { SettingsContextProvider } from '~/context/settings';
 import { routes } from '~/routes';
 
 function App(): JSX.Element {
   return (
     <BrowserRouter>
-      <DataContextProvider>
+      <SettingsContextProvider>
         <Routes>
           {routes.map((route) => (
             <Route key={route.path} path={route.path} element={route.page()} />
           ))}
         </Routes>
-      </DataContextProvider>
+      </SettingsContextProvider>
     </BrowserRouter>
   );
 }
