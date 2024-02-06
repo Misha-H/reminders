@@ -7,6 +7,8 @@ import { DbBase } from '~/db/utils/DbBase';
 import type { NewTask, Task } from '~/db/schema/tasks';
 import type { NewSubtask, Subtask } from '~/db/schema/subtasks';
 
+// TODO: Update db `tasks` table to allow the correct fields. (currently missing fields).
+
 export class Db {
   public static async getTasks() {
     return await DbBase.client.select().from(tasks);

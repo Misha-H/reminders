@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { LocalStorage } from '~/utils';
 import { Accordion, FormField, Header } from '~/components';
+import { LocalStorage } from '~/utils';
 
 import type { FormFieldType } from '~/components';
 
@@ -12,6 +12,7 @@ interface Group {
 }
 
 export default function () {
+  // TODO: Possibly make this a context. Depends if we are just going to update our CSS or not.
   const [settings, setSettings] = useState(LocalStorage.get());
   const groups: Array<Group> = [
     {
@@ -99,6 +100,9 @@ export default function () {
                     type={field.type}
                     enum={field.enum}
                     defaultValue={settings[group.id][field.id]}
+                    handler={(data) => {
+                      console.log('data', data);
+                    }}
                   />,
                 ]}
               >

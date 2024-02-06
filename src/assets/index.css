@@ -293,14 +293,14 @@ h3 {
   padding: 1rem;
 }
 
-.page > .actions {
+.page .actions {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-top: 1.75rem;
 }
 
-.page > .actions > button {
+.page .actions > button {
   border-radius: 0.25rem;
   padding: 0.5rem 1rem;
   box-shadow: var(--shadow);
@@ -308,7 +308,7 @@ h3 {
   margin-right: 0.5rem;
 }
 
-.page > .actions > button:last-child {
+.page .actions > button:last-child {
   flex-grow: 1;
   margin-right: 0;
 }
@@ -347,11 +347,11 @@ h3 {
 /**
  * Settings Page
  */
- .settings.page > .actions {
+ .settings.page .actions {
   justify-content: flex-end;
 }
 
-.settings.page > .actions > button {
+.settings.page .actions > button {
   flex-grow: 0;
 }
 

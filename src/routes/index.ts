@@ -1,4 +1,4 @@
-import { Home, Settings, Events, Contacts, Timetable } from '~/pages';
+import { Home, Settings, Tasks, Contacts, Timetable } from '~/pages';
 import {
   Calendar,
   CalendarFill,
@@ -24,7 +24,7 @@ interface Route {
 
 export const routes: Array<Route> = [
   { path: '/', name: 'Home', page: Home, icon: House, activeIcon: HouseFill },
-  { path: '/events', name: 'Events', page: Events, icon: ClipboardPlus, activeIcon: ClipboardPlusFill },
+  { path: '/tasks', name: 'Tasks', page: Tasks, icon: ClipboardPlus, activeIcon: ClipboardPlusFill },
   { path: '/timetable', name: 'Timetable', page: Timetable, icon: Calendar, activeIcon: CalendarFill },
   { path: '/contacts', name: 'Contacts', page: Contacts, icon: People, activeIcon: PeopleFill },
   { path: '/settings', name: 'Settings', page: Settings, icon: Gear, activeIcon: GearFill },

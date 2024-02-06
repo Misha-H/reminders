@@ -36,7 +36,7 @@ export class DbBase {
             sqlWithSwappedPlaceholders,
             params
           );
-          return { rows: result.map((row) => Object.values(row)) };
+          return { rows: result.map(Object.values) };
         }
       } catch (error: unknown) {
         console.error('Error from sqlite proxy server: ', error);

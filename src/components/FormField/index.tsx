@@ -1,4 +1,8 @@
-import type { HTMLInputTypeAttribute, ComponentProps } from 'react';
+import type {
+  ChangeEvent,
+  ComponentProps,
+  HTMLInputTypeAttribute,
+} from 'react';
 
 export interface FormFieldEnumItemType {
   id: string;
@@ -6,7 +10,9 @@ export interface FormFieldEnumItemType {
   value: string;
 }
 
-type ElementTypes = ComponentProps<'textarea'> & ComponentProps<'select'> & ComponentProps<'input'>;
+type ElementTypes = ComponentProps<'textarea'> &
+  ComponentProps<'select'> &
+  ComponentProps<'input'>;
 
 export interface FormFieldType extends ElementTypes {
   id: string;
@@ -25,27 +31,46 @@ export interface FormFieldType extends ElementTypes {
    * Default value, or default selection determined by `id`.
    */
   defaultValue?: string;
+  handler?: (
+    data: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>['target']['value'],
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => void;
 }
 
-export default function (props: FormFieldType) {
-  return props.type === 'textarea' ? (
+export default function ({
+  id,
+  label,
+  type,
+  enum: enums,
+  defaultValue,
+  handler = () => {},
+  ...props
+}: FormFieldType) {
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    handler(event.target.value, event);
+  };
+
+  return type === 'textarea' ? (
     <textarea
       {...props}
-      id={props.id}
+      id={id}
+      name={id}
       className='form-control'
-      placeholder={props.label}
-      defaultValue={props.defaultValue}
+      placeholder={label}
+      defaultValue={defaultValue}
+      onChange={handleOnChange}
     ></textarea>
-  ) : props.type === 'dropdown' ? (
+  ) : type === 'dropdown' ? (
     <select
       {...props}
-      id={props.id}
+      id={id}
+      name={id}
       className='form-control'
-      placeholder={props.label}
+      onChange={handleOnChange}
     >
-      {props.enum &&
-        props.enum.map((item) => (
-          <option key={item.id} value={item.value} selected={item.id === props.defaultValue}>
+      {enums &&
+        enums.map((item) => (
+          <option key={item.id} value={item.value} defaultValue={defaultValue}>
             {item.label}
           </option>
         ))}
@@ -53,11 +78,13 @@ export default function (props: FormFieldType) {
   ) : (
     <input
       {...props}
-      id={props.id}
-      type={props.type || 'text'}
+      id={id}
+      name={id}
+      type={type || 'text'}
       className='form-control'
-      placeholder={props.label}
-      defaultValue={props.defaultValue}
+      placeholder={label}
+      defaultValue={defaultValue}
+      onChange={handleOnChange}
     />
   );
 }

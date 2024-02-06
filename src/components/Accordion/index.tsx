@@ -1,4 +1,5 @@
 import * as Accordion from '@radix-ui/react-accordion';
+import { Fragment } from 'react';
 
 import ChevronDown from './ChevronDown';
 
@@ -25,7 +26,7 @@ export default function (props: AccordianProps) {
         </Accordion.Header>
         {hasContent && (
           <Accordion.Content className='accordion-content'>
-            {props.content.map((contentItem) => contentItem)}
+            {props.content.map((contentItem, index) => <Fragment key={index}>{contentItem}</Fragment>)}
           </Accordion.Content>
         )}
       </Accordion.Item>
