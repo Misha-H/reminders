@@ -347,14 +347,13 @@ h3 {
 /**
  * Settings Page
  */
- .settings.page .actions {
+.settings.page .actions {
   justify-content: flex-end;
 }
 
 .settings.page .actions > button {
   flex-grow: 0;
 }
-
 
 /**
  * Card
@@ -373,6 +372,7 @@ h3 {
 
 .form-floating {
   position: relative;
+  width: 100%; /* x in searchbar to the right */
 }
 
 .form-floating > .form-control:focus,
