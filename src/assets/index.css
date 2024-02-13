@@ -375,6 +375,7 @@ h3 {
 
 .form-floating {
   position: relative;
+  width: 100%; /* x in searchbar to the right */
 }
 
 .form-floating > .form-control:focus,
