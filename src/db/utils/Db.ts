@@ -1,9 +1,11 @@
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
+import { contacts } from '~/db/schema/contacts';
 import { tasks } from '~/db/schema/tasks';
 import { subtasks } from '~/db/schema/subtasks';
 import { DbBase } from '~/db/utils/DbBase';
 
+import type { NewContact, Contact } from '~/db/schema/contacts';
 import type { NewTask, Task } from '~/db/schema/tasks';
 import type { NewSubtask, Subtask } from '~/db/schema/subtasks';
 
@@ -27,7 +29,10 @@ export class Db {
   }
 
   public static async getSubtasks(taskId: Task['id']) {
-    return await DbBase.client.select().from(subtasks).where(eq(subtasks.taskId, taskId));
+    return await DbBase.client
+      .select()
+      .from(subtasks)
+      .where(eq(subtasks.taskId, taskId));
   }
 
   public static async createSubtask(values: NewSubtask) {
@@ -40,5 +45,34 @@ export class Db {
 
   public static async updateSubtask(values: NewSubtask) {
     return await DbBase.client.update(subtasks).set(values);
+  }
+
+  public static async getContacts() {
+    return await DbBase.client.select().from(contacts);
+  }
+
+  public static async createContact(values: NewContact) {
+    return await DbBase.client.insert(contacts).values(values);
+  }
+
+  public static async deleteContact(id: Contact['id']) {
+    return await DbBase.client.delete(contacts).where(eq(contacts.id, id));
+  }
+
+  public static async updateContact(values: NewContact) {
+    return await DbBase.client.update(contacts).set(values);
+  }
+
+  public static async doesContactPhoneExist(phone: Contact['phone']) {
+    const result = await DbBase.client
+      .select({ count: sql<boolean>`count(1)`.mapWith(Boolean) })
+      .from(contacts)
+      .where(eq(contacts.phone, phone));
+
+    if (Array.isArray(result) && result.length === 1) {
+      return result[0].count;
+    }
+
+    throw new Error('Unexpected result from database at `doesContactPhoneExist`.');
   }
 }

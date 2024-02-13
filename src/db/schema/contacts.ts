@@ -5,8 +5,9 @@ import type { InferSelectModel, InferInsertModel } from 'drizzle-orm';
 
 export const contacts = sqliteTable('contacts', {
   id: integer('id').primaryKey({ autoIncrement: true }),
+  name: text('name', { mode: 'text', length: 128 }).notNull(),
+  phone: text('phone', { mode: 'text', length: 10 }).notNull().unique(),
   description: text('description', { mode: 'text', length: 500 }),
-  phone: text('phone', { mode: 'text', length: 10 }).unique(),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
     .$type<number>()

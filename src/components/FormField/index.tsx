@@ -31,6 +31,7 @@ export interface FormFieldType extends ElementTypes {
    * Default value, or default selection determined by `id`.
    */
   defaultValue?: string;
+  required?: boolean;
   handler?: (
     data: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>['target']['value'],
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -42,6 +43,7 @@ export default function ({
   label,
   type,
   enum: enums,
+  required,
   defaultValue,
   handler = () => {},
   ...props
@@ -58,6 +60,7 @@ export default function ({
       className='form-control'
       placeholder={label}
       defaultValue={defaultValue}
+      required={required}
       onChange={handleOnChange}
     ></textarea>
   ) : type === 'dropdown' ? (
@@ -66,6 +69,7 @@ export default function ({
       id={id}
       name={id}
       className='form-control'
+      required={required}
       onChange={handleOnChange}
     >
       {enums &&
@@ -84,6 +88,7 @@ export default function ({
       className='form-control'
       placeholder={label}
       defaultValue={defaultValue}
+      required={required}
       onChange={handleOnChange}
     />
   );
