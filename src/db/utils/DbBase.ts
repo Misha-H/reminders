@@ -2,10 +2,10 @@ import { sql } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/sqlite-proxy';
 import Database from 'tauri-plugin-sql-api';
 
-import rawSql from '~/db/drizzle/0000_cuddly_arachne.sql?raw';
+import rawSql from '~/db/drizzle/0000_quick_roxanne_simpson.sql?raw';
 
 export class DbBase {
-  private static name: string = 'events.db';
+  private static name: string = 'tasks.db';
   private static hasInitSchemaThisConnection: boolean = false;
   private static connection: Database | null = null;
   public static client = drizzle(

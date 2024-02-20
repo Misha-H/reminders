@@ -1,7 +1,8 @@
 CREATE TABLE `contacts` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`name` text(128) NOT NULL,
+	`phone` text(10) NOT NULL,
 	`description` text(500),
-	`phone` text(10),
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL
 );
 --> statement-breakpoint
@@ -16,7 +17,11 @@ CREATE TABLE `subtasks` (
 --> statement-breakpoint
 CREATE TABLE `tasks` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`title` text(512) NOT NULL,
 	`description` text(1024) NOT NULL,
+	`background_color` text(12) NOT NULL,
+	`mark_weight` integer NOT NULL,
+	`date` text NOT NULL,
 	`is_completed` integer DEFAULT false NOT NULL,
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL
 );

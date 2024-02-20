@@ -78,6 +78,15 @@ export default function () {
     },
   ];
 
+  const onChange = (group: Group['id'], field: FormFieldType['id'], value: string) => {
+    setSettings((prevSettings) => {
+      prevSettings[group][field] = value;
+      console.log(JSON.stringify(prevSettings, null, 2));
+      LocalStorage.save(prevSettings);
+      return prevSettings;
+    })
+  };
+
   const onReset = () => {
     LocalStorage.reset();
   };
@@ -85,6 +94,9 @@ export default function () {
   return (
     <div className='settings page'>
       <Header title='Settings' />
+
+      {/*  */}
+      <pre>{JSON.stringify(settings, null, 2)}</pre>
 
       {groups.map((group) => (
         <div key={group.id}>
@@ -101,7 +113,8 @@ export default function () {
                     enum={field.enum}
                     defaultValue={settings[group.id][field.id]}
                     handler={(data) => {
-                      console.log('data', data);
+                      console.log(group.id, field.id, data);
+                      onChange(group.id, field.id, data);
                     }}
                   />,
                 ]}

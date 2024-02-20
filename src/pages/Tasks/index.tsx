@@ -20,23 +20,23 @@ export default function () {
     { id: 'date', label: 'Date', type: 'date', required: true },
   ];
 
+  const getTasks = () => {
+    Db.getTasks().then(setData);
+  }
+
   const handleConfirm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const newTask = Object.fromEntries(formData.entries()) as unknown as NewTask;
     await Db.createTask(newTask);
+    getTasks();
   };
 
-  useEffect(() => {
-    Db.getTasks().then(setData);
-  }, []);
+  // Get the tasks when the page is rendered into view
+  useEffect(getTasks, []);
 
   return (
     <div className='tasks page'>
-      <div style={{ backgroundColor: 'red' }}>
-        <span>Phone number ('{}') already exists. Please try another phone number.</span>
-      </div>
-
       <Header title='Tasks' />
 
       <Searchbar />
@@ -75,8 +75,6 @@ export default function () {
           <span className='description'>Create New Task</span>
         </div>
       </Accordion>
-
-      <hr />
 
       <div className='task-group'>
         {data.map((task) => (

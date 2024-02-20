@@ -3,16 +3,10 @@
   src: url('Nunito/Nunito-VariableFont_wght.ttf');
 }
 
-html {
-  font-size: 16px;
-}
-
-body {
-  font-family: 'Nunito', Arial, sans-serif;
-  margin: 0;
-}
-
 :root {
+  --font-family: 'Nunito', Arial, sans-serif;
+  --font-size: 16px;
+
   --primary-background-color: #e9e9e9;
   --secondary-background-color: #f9f9f9;
   --primary-text-color: #1e1e1e;
@@ -20,6 +14,15 @@ body {
 
   --color-red: #ffc8ca;
   --color-green: #b3f1bf;
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+body {
+  font-family: var(--font-family);
+  margin: 0;
 }
 
 * {
@@ -54,6 +57,14 @@ body::-webkit-scrollbar {
 
 .bg-green {
   background-color: var(--color-green);
+}
+
+.bg-red:hover {
+  filter: brightness(105%);
+}
+
+.bg-green:hover {
+  filter: brightness(105%);
 }
 
 /* 
@@ -304,6 +315,7 @@ h3 {
 }
 
 .page .actions > button {
+  cursor: pointer;
   border-radius: 0.25rem;
   padding: 0.5rem 1rem;
   box-shadow: var(--shadow);
@@ -439,4 +451,29 @@ h3 {
 
 label {
   display: inline-block;
+}
+
+.floating-feedback {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+}
+
+.floating-feedback > div {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.15rem;
+}
+
+.floating-feedback > div > span {
+  padding: 0.5rem 1rem;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 0.25rem;
+  background-color: var(--color-red);
 }

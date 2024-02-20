@@ -8,35 +8,26 @@ import type { FormEvent } from 'react';
 import type { FormFieldType } from '~/components';
 import type { NewContact } from '~/db/schema/contacts';
 
-interface Contact {
-  name: string;
-  description: string;
-  phone: string;
-}
-
-// TODO: Remove when done with test data
-const contacts: Array<Contact> = [
-  { name: 'Random Name0', description: 'Description0', phone: '0400 000 000' },
-  { name: 'Random Name1', description: 'Description1', phone: '0400 111 111' },
-  { name: 'Random Name2', description: 'Description2', phone: '0400 222 222' },
-  { name: 'Random Name3', description: 'Description3', phone: '0400 333 333' },
-  { name: 'Random Name4', description: 'Description4', phone: '0400 444 444' },
-  { name: 'Random Name5', description: 'Description5', phone: '0400 555 555' },
-];
-
 export default function () {
-  const [lastPhoneNumber, setLastPhoneNumber] = useState<string>();
+  const [lastPhoneNumber, setLastPhoneNumber] = useState<string>('');
+  const [doShowPhoneFeedback, setDoShowPhoneFeedback] =
+    useState<boolean>(false);
   const [data, setData] = useState<
     Awaited<ReturnType<(typeof Db)['getContacts']>>
   >([]);
   const newContactFields: Array<FormFieldType> = [
     { id: 'name', label: 'Name', required: true },
-    { id: 'phone', label: 'Phone Number', type: 'tel', required: true },
+    { id: 'phone', label: 'Phone Number', type: 'tel', required: true, maxLength: 10 },
     { id: 'description', label: 'Description', type: 'textarea' },
   ];
 
+  const getContacts = () => {
+    Db.getContacts().then(setData);
+  }
+
   const handleConfirm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // Get the keys and values from the form data
     const formData = new FormData(event.currentTarget);
     const newContact = Object.fromEntries(
       formData.entries()
@@ -47,21 +38,38 @@ export default function () {
       newContact.phone
     );
 
-    // TODO: doesContactPhoneExist = false
-    // - Create new contact
-    // TODO: doesContactPhoneExist = true
-    // - Disbale the submit button, to show and stop user from repeating request
-    // - Display a message to the user with the phone number they inserted which is already used, and provide feedback on what to do next (change to use a different phone number)
-
-    await Db.createContact(newContact);
+    // Create contact if contact is unique, otherwise display non-unique phone number message
+    if (!doesContactPhoneExist) {
+      await Db.createContact(newContact);
+      // Update the contacts list, after the new contact has been created
+      getContacts();
+    } else {
+      // Store attempted phone number, to display in feedback message
+      setLastPhoneNumber(newContact.phone);
+      // Show user the phone number feedback message
+      setDoShowPhoneFeedback(true);
+      // Hide the phone number feedback message from the user after a delay
+      setTimeout(() => setDoShowPhoneFeedback(false), 10000);
+    }
   };
 
-  useEffect(() => {
-    Db.getContacts().then(setData);
-  }, []);
+  // Get the contacts when the page is rendered into view
+  useEffect(getContacts, []);
 
   return (
     <div className='contacts page'>
+      {doShowPhoneFeedback ? (
+        <div className='floating-feedback'>
+          <div>
+            <span>
+              Phone number {lastPhoneNumber ?? '<unknown_phonenumber>'} already exists. Please try another phone number.
+            </span>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
+
       <Header title='Contacts' />
 
       <Accordion
@@ -76,6 +84,7 @@ export default function () {
                     label={field.label}
                     type={field.type}
                     placeholder={field.label}
+                    maxLength={field.maxLength}
                   />
                   <label htmlFor={field.id}>{field.label}</label>
                 </div>
@@ -98,9 +107,9 @@ export default function () {
         </div>
       </Accordion>
 
-      {contacts.map((contact) => (
+      {data.map((contact) => (
         <Accordion
-          key={contact.name}
+          key={contact.id}
           content={[
             <div>
               <p className='description'>{contact.phone}</p>
