@@ -95,7 +95,7 @@ export default function () {
     <div className='settings page'>
       <Header title='Settings' />
 
-      {/*  */}
+      {/* TODO: Update store */}
       <pre>{JSON.stringify(settings, null, 2)}</pre>
 
       {groups.map((group) => (
@@ -113,6 +113,7 @@ export default function () {
                     enum={field.enum}
                     defaultValue={settings[group.id][field.id]}
                     handler={(data) => {
+                      // TODO: Remove log
                       console.log(group.id, field.id, data);
                       onChange(group.id, field.id, data);
                     }}
