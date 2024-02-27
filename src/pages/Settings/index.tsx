@@ -1,26 +1,34 @@
-import { useState } from 'react';
-
 import { Accordion, FormField, Header } from '~/components';
 import { LocalStorage } from '~/utils';
+import { useSettings } from '~/hooks/useSettings';
 
 import type { FormFieldType } from '~/components';
 
-interface Group {
+export interface Group {
   id: string;
   label: string;
-  fields: Array<FormFieldType>;
+  fields: Array<FormFieldType & { var: string }>;
 }
 
 export default function () {
-  // TODO: Possibly make this a context. Depends if we are just going to update our CSS or not.
-  const [settings, setSettings] = useState(LocalStorage.get());
+  const { settings, updateSettings, getSettings } = useSettings();
   const groups: Array<Group> = [
     {
       id: 'theme',
       label: 'Theme',
       fields: [
-        { id: 'theme-background', label: 'Background Colour', type: 'color' },
-        { id: 'theme-foreground', label: 'Foreground Colour', type: 'color' },
+        {
+          id: 'theme-background',
+          label: 'Background Colour',
+          type: 'color',
+          var: '--primary-background-color',
+        },
+        {
+          id: 'theme-foreground',
+          label: 'Foreground Colour',
+          type: 'color',
+          var: '--primary-text-color',
+        },
       ],
     },
     {
@@ -31,6 +39,7 @@ export default function () {
           id: 'font',
           label: 'Font',
           type: 'dropdown',
+          var: '--font-family',
           enum: [
             {
               id: 'font-nunito',
@@ -64,28 +73,20 @@ export default function () {
           id: 'size',
           label: 'Text Size',
           type: 'dropdown',
+          var: '--font-size',
           enum: [
-            { id: 'size-12', label: '12', value: '12' },
-            { id: 'size-13', label: '13', value: '13' },
-            { id: 'size-14', label: '14', value: '14' },
-            { id: 'size-15', label: '15', value: '15' },
-            { id: 'size-16', label: '16', value: '16' },
-            { id: 'size-17', label: '17', value: '17' },
-            { id: 'size-18', label: '18', value: '18' },
+            { id: 'size-12', label: '12', value: '12px' },
+            { id: 'size-13', label: '13', value: '13px' },
+            { id: 'size-14', label: '14', value: '14px' },
+            { id: 'size-15', label: '15', value: '15px' },
+            { id: 'size-16', label: '16', value: '16px' },
+            { id: 'size-17', label: '17', value: '17px' },
+            { id: 'size-18', label: '18', value: '18px' },
           ],
         },
       ],
     },
   ];
-
-  const onChange = (group: Group['id'], field: FormFieldType['id'], value: string) => {
-    setSettings((prevSettings) => {
-      prevSettings[group][field] = value;
-      console.log(JSON.stringify(prevSettings, null, 2));
-      LocalStorage.save(prevSettings);
-      return prevSettings;
-    })
-  };
 
   const onReset = () => {
     LocalStorage.reset();
@@ -95,7 +96,6 @@ export default function () {
     <div className='settings page'>
       <Header title='Settings' />
 
-      {/* TODO: Update store */}
       <pre>{JSON.stringify(settings, null, 2)}</pre>
 
       {groups.map((group) => (
@@ -113,9 +113,9 @@ export default function () {
                     enum={field.enum}
                     defaultValue={settings[group.id][field.id]}
                     handler={(data) => {
-                      // TODO: Remove log
-                      console.log(group.id, field.id, data);
-                      onChange(group.id, field.id, data);
+                      getSettings();
+                      updateSettings(group.id, field.id, field.var, data);
+                      console.log(JSON.stringify(settings, null, 2));
                     }}
                   />,
                 ]}

@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+// TODO: Delete this as we dont need/use it
 import { SettingsContextProvider } from '~/context/settings';
 import { routes } from '~/routes';
 
