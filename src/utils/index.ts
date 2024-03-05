@@ -1,47 +1,33 @@
 export interface Storage {
-  [key: string]: any;
-  theme: {
-    'theme-background': '#e9e9e9' | string;
-    'theme-foreground': '#1e1e1e' | string;
-  };
-  typography: {
-    font:
-      | 'font-nunito'
-      | 'font-system'
-      | 'font-monospace'
-      | 'font-arial'
-      | 'font-times-new-roman';
-    size:
-      | 'size-12'
-      | 'size-13'
-      | 'size-14'
-      | 'size-15'
-      | 'size-16'
-      | 'size-17'
-      | 'size-18';
+  [groupKey: string]: {
+    [fieldKey: string]: {
+      value: string;
+      /** CSS variable name. */
+      var: string;
+    }
   };
 }
 
 export class LocalStorage {
-  static name = '__storage';
-  static store = window.localStorage;
-  static defaults: Storage = {
+  private static name = '__storage';
+  private static store = window.localStorage;
+  public static defaults: Storage = {
     typography: {
-      font: 'font-nunito',
-      size: 'size-16',
+      font: { value: 'font-nunito', var: '--font-family' },
+      size: { value: 'size-16', var: '--font-size' },
     },
     theme: {
-      'theme-background': '#e9e9e9',
-      'theme-foreground': '#1e1e1e',
+      'theme-background': { value: '#e9e9e9', var: '--primary-background-color' },
+      'theme-foreground': { value: '#1e1e1e', var: '--primary-text-color' },
     },
   };
 
-  public static save(value: Storage) {
+  public static save(value: Storage): Storage {
     this.store.setItem(this.name, JSON.stringify(value));
     return value;
   }
 
-  public static reset() {
+  public static reset(): Storage {
     return this.save(this.defaults);
   }
 
