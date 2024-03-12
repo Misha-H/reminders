@@ -30,6 +30,19 @@ body {
   box-sizing: border-box;
 }
 
+input,
+select {
+  background-color: transparent;
+}
+
+input[type='color'] {
+  min-height: 2rem;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  appearance: none;
+}
+
 /* TODO: Change CSS `:focus` so that can make placeholder and label in center of field */
 .form-floating > .form-control,
 .form-floating > label {
@@ -181,16 +194,12 @@ h3 {
   border-radius: 0.25rem;
   box-shadow: var(--shadow);
   color: black;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
   width: 100%;
 }
 
 .accordion-root:hover {
   box-shadow: 0px 0px 6px #747474;
-}
-
-.accordion-root:first-child {
-  margin-top: 0;
 }
 
 .accordion-item {
@@ -199,7 +208,6 @@ h3 {
 }
 
 .accordion-item:first-child {
-  margin-top: 0;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
 }

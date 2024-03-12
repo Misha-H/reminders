@@ -3,8 +3,13 @@ import { useState } from 'react';
 import { LocalStorage } from '~/utils';
 
 import type { FormFieldType } from '~/components';
-import type { Group } from '~/pages/Settings';
 import type { Storage } from '~/utils';
+
+export interface Group {
+  id: string;
+  label: string;
+  fields: Array<FormFieldType & { var: string }>;
+}
 
 export const groups: Array<Group> = [
   {
@@ -87,27 +92,11 @@ export const useSettings = () => {
   let lastTimeoutId: number | null = null;
 
   const updateCssVars = (updates: Storage) => {
-    // This is what default settings looks like
-    // {
-    //   "typography": {
-    //     "font": { value: "font-nunito", var: '--my-css-var }, // maybe how should be saving objects
-    //     "size": "size-16"
-    //   },
-    //   "theme": {
-    //     "theme-background": "#e9e9e9",
-    //     "theme-foreground": "#1e1e1e"
-    //   }
-    // }
-
     for (const groupKey in updates) {
       const group = updates[groupKey];
 
       for (const fieldKey in group) {
         const { value, var: cssVar } = group[fieldKey];
-
-        // TODO: This is all to get the variable, which is already known in `updateSettings`
-        // Potentially just save `var` in local storage // Done but double check
-        // May not need to check against a map at all - which is ideal
         document.documentElement.style.setProperty(cssVar, value);
       }
     }
@@ -136,20 +125,20 @@ export const useSettings = () => {
         // Update settings
         setSettings((prevSettings) => {
           // Make a shallow copy of the settings
+          // Update the changed value
           const newSettings = {
+            ...prevSettings,
             [group]: {
+              ...prevSettings[group],
               [field]: { value: newValue, var: fieldVar },
             },
           };
-          // Update the changed value
-          const tempSettings = { ...prevSettings, ...newSettings };
           // Save updated settings to local storage
-          LocalStorage.save(tempSettings);
-          // TODO: Changing value is causing error.
+          LocalStorage.save(newSettings);
           // Update the css variables to use new settings globally
           updateCssVars(newSettings);
           // Update the settings state to reflect saved settings
-          return tempSettings;
+          return newSettings;
         });
 
         lastTimeoutId = null; // Tells timeout when completed
@@ -157,6 +146,9 @@ export const useSettings = () => {
       1000 // One second time out between changing settings to avoid overload/lag
     );
   };
+
+  // Update CSS variables to reflect saved data
+  updateCssVars(settings);
 
   return {
     settings,

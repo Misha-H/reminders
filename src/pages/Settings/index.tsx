@@ -1,17 +1,8 @@
 import { Accordion, FormField, Header } from '~/components';
-import { useSettings, groups } from '~/hooks/useSettings';
-
-import type { FormFieldType } from '~/components';
-
-export interface Group {
-  id: string;
-  label: string;
-  fields: Array<FormFieldType & { var: string }>;
-}
+import { groups, useSettings } from '~/hooks/useSettings';
 
 export default function () {
   const { settings, resetSettings, updateSettings } = useSettings();
-
 
   return (
     <div className='settings page'>

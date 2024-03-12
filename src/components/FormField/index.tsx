@@ -33,8 +33,12 @@ export interface FormFieldType extends ElementTypes {
   defaultValue?: string;
   required?: boolean;
   handler?: (
-    data: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>['target']['value'],
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    data: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >['target']['value'],
+    event: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => void;
 }
 
@@ -48,7 +52,11 @@ export default function ({
   handler = () => {},
   ...props
 }: FormFieldType) {
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleOnChange = (
+    event: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     handler(event.target.value, event);
   };
 
@@ -71,10 +79,11 @@ export default function ({
       className='form-control'
       required={required}
       onChange={handleOnChange}
+      defaultValue={defaultValue}
     >
       {enums &&
         enums.map((item) => (
-          <option key={item.id} value={item.value} defaultValue={defaultValue}>
+          <option key={item.id} value={item.value}>
             {item.label}
           </option>
         ))}

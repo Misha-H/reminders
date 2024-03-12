@@ -13,8 +13,8 @@ export class LocalStorage {
   private static store = window.localStorage;
   public static defaults: Storage = {
     typography: {
-      font: { value: 'font-nunito', var: '--font-family' },
-      size: { value: 'size-16', var: '--font-size' },
+      font: { value: "'Nunito', Arial, sans-serif", var: '--font-family' },
+      size: { value: '16px', var: '--font-size' },
     },
     theme: {
       'theme-background': { value: '#e9e9e9', var: '--primary-background-color' },
