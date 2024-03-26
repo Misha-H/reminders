@@ -1,17 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useId } from 'react';
 
-import { Subtask, Accordion } from '~/components';
+import { Accordion, Subtask } from '~/components';
 import { Db } from '~/db/utils/Db';
+import { Edit } from '~/assets/icons';
 
-import type { Task } from '~/db/schema/tasks'
+import type { FormEventHandler } from 'react';
+
+import type { Task } from '~/db/schema/tasks';
 
 interface Props {
   task: Task;
+  onDelete: () => void;
 }
 
 export default function (props: Props) {
-  const { createdAt, description, id, isCompleted } = props.task;
-  const [data, setData] = useState<Awaited<ReturnType<typeof Db['getSubtasks']>>>([]);
+  const { onDelete } = props;
+  const { createdAt, description, id, isCompleted, markWeight, title } = props.task;
+  const [isCreateSubtaskMode, setIsCreateSubtaskMode] = useState<boolean>(false);
+  const [data, setData] = useState<Awaited<ReturnType<(typeof Db)['getSubtasks']>>>([]);
+  const randomId = useId();
 
   /**
    * Format a timestamp into an Australian standard date.
@@ -27,20 +34,53 @@ export default function (props: Props) {
     return `${dd}/${mm}/${yyyy}`;
   };
 
-  useEffect(() => {
-    Db.getSubtasks(id).then(setData);
-  }, []);
+  // TODO: Leaving off here, need to create subtask when this form is submitted.
+  const createSubtask: FormEventHandler<HTMLFormElement> = async (event) => {
+    console.log(event.target);
+    // await Db.createSubtask({
+    //   description: event.
+    // })
+    // setIsCreateSubtaskMode(false);
+  };
+
+  const getSubtasks = () => {
+    Db.getSubtasks(id).then((data) => setData(data));
+  };
+
+  useEffect(getSubtasks, []);
 
   // TODO: Think of the UX on how and where you would like the options to create/update/delete.
 
   return (
     <Accordion
-      content={data.map((subtask) => (
-        <Subtask key={subtask.id} subtask={subtask} />
-      ))}
+      content={[
+        <div>
+          <p className='description'>{description}</p>
+          <p className='description'>Mark Weight: {markWeight}</p>
+        </div>,
+        ...data.map((subtask) => <Subtask key={subtask.id} subtask={subtask} />),
+        isCreateSubtaskMode ? (
+          <form onSubmit={createSubtask}>
+            <div className='form-group'>
+              <label className='d-none' htmlFor={randomId}>Subtask</label>
+              <input type='text' id={randomId} className='form-control' />
+            </div>
+          </form>
+        ) : (
+          <></>
+        ),
+        <div className='actions'>
+          <button className='bg-red' type='button' onClick={onDelete}>
+            Delete Task
+          </button>
+          <button className='bg-green' type='submit' onClick={() => setIsCreateSubtaskMode(true)}>
+            Add Subtask
+          </button>
+        </div>,
+      ]}
     >
       <div className='container'>
-        <span className='description'>{description}</span>
+        <span className='description'>{title}</span>
         <span className='date'>{formatDate(createdAt)}</span>
       </div>
     </Accordion>

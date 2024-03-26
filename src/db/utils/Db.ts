@@ -21,7 +21,8 @@ export class Db {
   }
 
   public static async deleteTask(id: Task['id']) {
-    return await DbBase.client.delete(tasks).where(eq(tasks.id, id));
+    await DbBase.client.delete(subtasks).where(eq(subtasks.taskId, id));
+    await DbBase.client.delete(tasks).where(eq(tasks.id, id));
   }
 
   public static async updateTask(values: NewTask) {
