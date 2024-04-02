@@ -1,12 +1,13 @@
-import { useEffect, useState, useId } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Accordion, Subtask } from '~/components';
+import { Accordion, FormField, Subtask } from '~/components';
 import { Db } from '~/db/utils/Db';
-import { Edit } from '~/assets/icons';
 
 import type { FormEventHandler } from 'react';
 
+import type { NewSubtask } from '~/db/schema/subtasks';
 import type { Task } from '~/db/schema/tasks';
+import type { FormFieldType } from '~/components';
 
 interface Props {
   task: Task;
@@ -18,7 +19,7 @@ export default function (props: Props) {
   const { createdAt, description, id, isCompleted, markWeight, title } = props.task;
   const [isCreateSubtaskMode, setIsCreateSubtaskMode] = useState<boolean>(false);
   const [data, setData] = useState<Awaited<ReturnType<(typeof Db)['getSubtasks']>>>([]);
-  const randomId = useId();
+  const newSubtaskFields: Array<FormFieldType> = [{ id: 'description', label: 'Description', type: 'textarea', required: true }];
 
   /**
    * Format a timestamp into an Australian standard date.
@@ -36,11 +37,12 @@ export default function (props: Props) {
 
   // TODO: Leaving off here, need to create subtask when this form is submitted.
   const createSubtask: FormEventHandler<HTMLFormElement> = async (event) => {
-    console.log(event.target);
-    // await Db.createSubtask({
-    //   description: event.
-    // })
-    // setIsCreateSubtaskMode(false);
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const newSubtask = Object.fromEntries(formData.entries()) as unknown as NewSubtask;
+    console.log(JSON.stringify(newSubtask, null, 2));
+    // await Db.createSubtask(newSubtask);
+    setIsCreateSubtaskMode(false);
   };
 
   const getSubtasks = () => {
@@ -61,22 +63,32 @@ export default function (props: Props) {
         ...data.map((subtask) => <Subtask key={subtask.id} subtask={subtask} />),
         isCreateSubtaskMode ? (
           <form onSubmit={createSubtask}>
-            <div className='form-group'>
-              <label className='d-none' htmlFor={randomId}>Subtask</label>
-              <input type='text' id={randomId} className='form-control' />
+            {newSubtaskFields.map((field) => (
+              <div key={field.id} className='form-floating'>
+                <FormField id={field.id} label={field.label} type={field.type} placeholder={field.label} required={field.required} />
+                <label htmlFor={field.id}>{field.label}</label>
+              </div>
+            ))}
+
+            <div className='actions'>
+              <button className='bg-red' type='button' onClick={() => setIsCreateSubtaskMode(false)}>
+                Cancel
+              </button>
+              <button className='bg-green' type='submit'>
+                Add Subtask
+              </button>
             </div>
           </form>
         ) : (
-          <></>
+          <div className='actions'>
+            <button className='bg-red' type='button' onClick={onDelete}>
+              Delete Task
+            </button>
+            <button className='bg-green' type='submit' onClick={() => setIsCreateSubtaskMode(true)}>
+              Add Subtask
+            </button>
+          </div>
         ),
-        <div className='actions'>
-          <button className='bg-red' type='button' onClick={onDelete}>
-            Delete Task
-          </button>
-          <button className='bg-green' type='submit' onClick={() => setIsCreateSubtaskMode(true)}>
-            Add Subtask
-          </button>
-        </div>,
       ]}
     >
       <div className='container'>

@@ -69,6 +69,7 @@ export default function ({
       placeholder={label}
       defaultValue={defaultValue}
       required={required}
+      rows={5}
       onChange={handleOnChange}
     ></textarea>
   ) : type === 'dropdown' ? (

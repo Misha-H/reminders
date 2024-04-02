@@ -8,15 +8,17 @@ import type { PropsWithChildren, ReactElement } from 'react';
 interface AccordianProps extends PropsWithChildren {
   content: Array<ReactElement>;
   /** @default false */
+  isColoured?: boolean;
+  /** @default false */
   isForm?: boolean;
 }
 
 export default function (props: AccordianProps) {
-  const { content, isForm = false, children } = props;
+  const { content, isColoured = false, isForm = false, children } = props;
   const hasContent = content.length > 0;
 
   return (
-    <Accordion.Root type='single' className={`accordion-root${isForm ? ' form' : ''}`} collapsible>
+    <Accordion.Root type='single' className={`accordion-root${isForm ? ' form' : ''}${isColoured ? ' coloured' : ''}`} collapsible>
       <Accordion.Item value='item-1' className='accordion-item'>
         <Accordion.Header className='accordion-header'>
           <Accordion.Trigger className='accordion-trigger'>

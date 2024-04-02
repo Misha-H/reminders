@@ -9,7 +9,7 @@ import type { InferSelectModel, InferInsertModel } from 'drizzle-orm';
 export const subtasks = sqliteTable('subtasks', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   taskId: integer('task_id').references(() => tasks.id),
-  description: text('description', { mode: 'text', length: 1024 }),
+  description: text('description', { mode: 'text', length: 1024 }).notNull(),
   isCompleted: integer('is_completed', { mode: 'boolean' })
     .notNull()
     .default(false),

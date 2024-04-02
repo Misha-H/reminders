@@ -35,19 +35,9 @@ select {
   background-color: transparent;
 }
 
-input[type='color'] {
-  min-height: 2rem;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  appearance: none;
-}
-
-/* TODO: Change CSS `:focus` so that can make placeholder and label in center of field */
-.form-floating > .form-control,
-.form-floating > label {
-  display: flex;
-  align-content: center;
+:input[type="color"] {
+  padding: 1rem !important;
+  padding-bottom: 0 !important;
 }
 
 .app {
@@ -228,9 +218,7 @@ h3 {
   margin-block-end: 0;
 }
 
-.accordion-trigger,
-.form-floating > .form-control,
-.form-floating > label {
+.accordion-trigger {
   padding: 0.5rem 0.75rem;
 }
 
@@ -347,25 +335,18 @@ h3 {
 /**
  * Expandable form
  */
-.accordion-root.form {
+.accordion-root.form.coloured {
   /* background-color: var(--color-green); */
   background-color: #d9f8df;
 }
 
-.accordion-root.form form {
-  /* background-color: red; */
-}
-
 .accordion-root.form .form-floating {
-  /* background-color: cyan; */
   margin-bottom: 1rem;
 }
 
 .accordion-root.form .form-floating > .form-control {
-  /* background-color: lime; */
   box-shadow: var(--shadow);
   background-color: transparent;
-  /* border: 1px solid #90eaa1; */
 }
 
 /**
@@ -396,94 +377,44 @@ h3 {
 
 .form-floating {
   position: relative;
-  width: 100%; /* x in searchbar to the right */
+  width: 100%;
+  display: flex;
 }
 
-.form-floating > .form-control:focus,
-.form-floating > .form-control:not(:placeholder-shown) {
-  font-weight: bold;
-  padding-top: 1.625rem;
-  padding-bottom: 0.625rem;
+.form-control {
+  width: 100%;
+  outline: 0;
+  border: 0;
 }
 
-.form-floating > .form-control {
-  padding: 0.5rem 0.75rem;
-  height: calc(3rem);
-  min-height: calc(3rem);
+.form-control {
+  appearance: none;
+}
+
+.form-control:not(:placeholder-shown) + label,
+.form-control:focus + label {
+  transform: translate(-0.5rem, -1rem);
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+.form-control,
+label {
+  padding: 1rem !important;
+  font-size: 1rem;
+  min-height: 3rem;
+  padding-block: 0;
+  padding-inline: 0;
+  font-family: inherit;
+  color: black;
+  background-color: transparent;
 }
 
 .form-floating > .form-control::placeholder {
   color: transparent;
 }
 
-.form-control:focus {
-  color: var(--primary-text-color);
-  outline: 0;
-}
-
-.form-control {
-  display: block;
-  width: 100%;
-  font-weight: bold;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  color: var(--primary-text-color);
-  border: 0;
-  margin: 0;
-  resize: vertical;
-  font-family: inherit;
-  border-radius: 0.375rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-floating > .form-control:focus ~ label,
-.form-floating > .form-control:not(:placeholder-shown) ~ label {
-  font-weight: 700;
-  opacity: 1;
-  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
-  height: auto;
-}
-
 .form-floating > label {
-  font-weight: 700;
   position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  transform-origin: 0 0;
-  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-}
-
-label {
-  display: inline-block;
-}
-
-.floating-feedback {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  z-index: 1;
-}
-
-.floating-feedback > div {
-  position: absolute;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.15rem;
-}
-
-.floating-feedback > div > span {
-  padding: 0.5rem 1rem;
-  text-align: center;
-  font-size: 0.75rem;
-  font-weight: bold;
-  border-radius: 0.25rem;
-  background-color: var(--color-red);
+  transition: all 0.1s ease-in-out;
 }

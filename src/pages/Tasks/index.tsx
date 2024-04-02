@@ -55,6 +55,7 @@ export default function () {
       <Searchbar />
 
       <Accordion
+        isColoured
         isForm
         content={[
           <div>

@@ -73,6 +73,7 @@ export default function () {
       <Header title='Contacts' />
 
       <Accordion
+        isColoured
         isForm
         content={[
           <div>

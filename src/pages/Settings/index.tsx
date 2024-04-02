@@ -25,7 +25,7 @@ export default function () {
                     handler={(data) => {
                       updateSettings(group.id, field.id, field.var, data);
                     }}
-                  />,
+                  />
                 ]}
               >
                 <div className='container'>
