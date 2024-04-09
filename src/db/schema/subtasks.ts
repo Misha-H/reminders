@@ -8,7 +8,7 @@ import type { InferSelectModel, InferInsertModel } from 'drizzle-orm';
 // TODO: Update date to generate timestamp
 export const subtasks = sqliteTable('subtasks', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  taskId: integer('task_id').references(() => tasks.id),
+  taskId: integer('task_id').references(() => tasks.id, { onDelete: 'cascade' }).notNull(),
   description: text('description', { mode: 'text', length: 1024 }).notNull(),
   isCompleted: integer('is_completed', { mode: 'boolean' })
     .notNull()

@@ -1,6 +1,4 @@
-import Settings from './Settings';
-import Tasks from './Tasks';
-import Timetable from './Timetable';
-import Contacts from './Contacts';
-
-export { Settings, Tasks, Timetable, Contacts };
+export { default as Settings } from './Settings';
+export { default as Tasks } from './Tasks';
+export { default as Timetable } from './Timetable';
+export { default as Contacts } from './Contacts';

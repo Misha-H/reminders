@@ -40,8 +40,8 @@ export default function (props: Props) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const newSubtask = Object.fromEntries(formData.entries()) as unknown as NewSubtask;
-    console.log(JSON.stringify(newSubtask, null, 2));
-    // await Db.createSubtask(newSubtask);
+    newSubtask.taskId = id;
+    await Db.createSubtask(newSubtask);
     setIsCreateSubtaskMode(false);
   };
 
