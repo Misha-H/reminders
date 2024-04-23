@@ -35,7 +35,6 @@ export default function (props: Props) {
     return `${dd}/${mm}/${yyyy}`;
   };
 
-  // TODO: Leaving off here, need to create subtask when this form is submitted.
   const createSubtask: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -46,21 +45,27 @@ export default function (props: Props) {
   };
 
   const getSubtasks = () => {
-    Db.getSubtasks(id).then((data) => setData(data));
+    Db.getSubtasks(id).then(setData);
   };
 
   useEffect(getSubtasks, []);
 
-  // TODO: Think of the UX on how and where you would like the options to create/update/delete.
-
   return (
     <Accordion
+      className='task'
       content={[
         <div>
           <p className='description'>{description}</p>
-          <p className='description'>Mark Weight: {markWeight}</p>
+          <p>
+            <span className='label'>Mark Weight:</span> {markWeight}
+          </p>
         </div>,
-        ...data.map((subtask) => <Subtask key={subtask.id} subtask={subtask} />),
+        <div className='subtask-group'>
+          <p className='label'>Subtasks:</p>
+          {data.map((subtask) => (
+            <Subtask key={subtask.id} subtask={subtask} />
+          ))}
+        </div>,
         isCreateSubtaskMode ? (
           <form onSubmit={createSubtask}>
             {newSubtaskFields.map((field) => (

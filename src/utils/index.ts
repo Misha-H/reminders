@@ -1,10 +1,12 @@
+import type { HTMLAttributes } from 'react';
+
 export interface Storage {
   [groupKey: string]: {
     [fieldKey: string]: {
       value: string;
       /** CSS variable name. */
       var: string;
-    }
+    };
   };
 }
 
@@ -40,4 +42,17 @@ export class LocalStorage {
 
     return JSON.parse(store);
   }
+}
+
+export function cls(...list: (boolean | string | undefined)[]): HTMLAttributes<HTMLElement>['className'] {
+  const className: string[] = [];
+
+  for (let i = 0; i < list.length; i++) {
+    const value = list[i];
+    if (typeof value === 'string') {
+      className.push(value);
+    }
+  }
+
+  return className.join(' ');
 }

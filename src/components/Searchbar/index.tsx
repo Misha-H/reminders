@@ -4,7 +4,6 @@ import  { FormField } from '~/components';
 import type { SyntheticEvent } from 'react';
 import type { FormFieldType } from '~/components';
 
-// TODO: Display all tasks (and subtasks) in a nice fashion - refer to Figma
 export default function () {
   const searchField: FormFieldType = {
     id: 'searchbar',
@@ -13,8 +12,9 @@ export default function () {
   }
 
   // TODO: add function description
+  // TODO: this does not search anything currently
   const handleSearch = (event: SyntheticEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { value } = event.target as HTMLInputElement;
+    const { value } = event.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
     const search = value.slice();
   };
 
