@@ -8,3 +8,4 @@ export { default as Subtask } from './Subtask';
 export { default as Task } from './Task';
 
 export type { FormFieldEnumItemType, FormFieldType } from './FormField';
+export type { SubtaskProps } from './Subtask';

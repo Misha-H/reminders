@@ -24,15 +24,12 @@ export class Db {
     await DbBase.client.delete(tasks).where(eq(tasks.id, id));
   }
 
-  public static async updateTask(values: NewTask) {
+  public static async updateTask(values: Partial<Task>) {
     return await DbBase.client.update(tasks).set(values);
   }
 
   public static async getSubtasks(taskId: Task['id']) {
-    return await DbBase.client
-      .select()
-      .from(subtasks)
-      .where(eq(subtasks.taskId, taskId));
+    return await DbBase.client.select().from(subtasks).where(eq(subtasks.taskId, taskId));
   }
 
   public static async createSubtask(values: NewSubtask) {
@@ -43,8 +40,8 @@ export class Db {
     return await DbBase.client.delete(subtasks).where(eq(subtasks.id, id));
   }
 
-  public static async updateSubtask(values: NewSubtask) {
-    return await DbBase.client.update(subtasks).set(values);
+  public static async updateSubtask(id: Subtask['id'], values: Partial<Subtask>) {
+    return await DbBase.client.update(subtasks).set(values).where(eq(subtasks.id, id));
   }
 
   public static async getContacts() {
@@ -59,7 +56,7 @@ export class Db {
     return await DbBase.client.delete(contacts).where(eq(contacts.id, id));
   }
 
-  public static async updateContact(values: NewContact) {
+  public static async updateContact(values: Partial<Contact>) {
     return await DbBase.client.update(contacts).set(values);
   }
 

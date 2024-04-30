@@ -24,7 +24,7 @@ export default function () {
         <Search />
       </div>
       <div className='form-floating'>
-        <FormField {...searchField} onInput={handleSearch}  />
+        <FormField {...searchField} onInput={handleSearch} />
         <label htmlFor={searchField.id}>{searchField.label}</label>
       </div>
     </div>

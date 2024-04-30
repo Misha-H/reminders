@@ -5,9 +5,9 @@ import { Db } from '~/db/utils/Db';
 
 import type { FormEventHandler } from 'react';
 
-import type { NewSubtask } from '~/db/schema/subtasks';
+import type { NewSubtask, Subtask as SubtaskType } from '~/db/schema/subtasks';
 import type { Task } from '~/db/schema/tasks';
-import type { FormFieldType } from '~/components';
+import type { FormFieldType, SubtaskProps } from '~/components';
 
 interface Props {
   task: Task;
@@ -48,6 +48,28 @@ export default function (props: Props) {
     Db.getSubtasks(id).then(setData);
   };
 
+  const onDeleteSubtask: SubtaskProps['onDelete'] = async (subtaskId) => {
+    console.log('delete', subtaskId);
+    try {
+      await Db.deleteSubtask(subtaskId);
+      getSubtasks();
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const onEditSubtask: SubtaskProps['onEdit'] = async (subtaskId, description) => {
+    console.log('edit', subtaskId, description);
+    try {
+      await Db.updateSubtask(subtaskId, { description });
+      getSubtasks();
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
   useEffect(getSubtasks, []);
 
   return (
@@ -62,8 +84,45 @@ export default function (props: Props) {
         </div>,
         <div className='subtask-group'>
           <p className='label'>Subtasks:</p>
+          {/* TODO: Dev */}
+          <Subtask
+            key={997}
+            subtask={{
+              createdAt: new Date().getTime(),
+              description: 'my subtask',
+              id: 997,
+              isCompleted: false,
+              taskId: 999999,
+            }}
+            onDelete={onDeleteSubtask}
+            onEdit={onEditSubtask}
+          />
+          <Subtask
+            key={998}
+            subtask={{
+              createdAt: new Date().getTime(),
+              description: 'my subtask',
+              id: 998,
+              isCompleted: false,
+              taskId: 999999,
+            }}
+            onDelete={onDeleteSubtask}
+            onEdit={onEditSubtask}
+          />
+          <Subtask
+            key={999}
+            subtask={{
+              createdAt: new Date().getTime(),
+              description: 'my subtask',
+              id: 999,
+              isCompleted: false,
+              taskId: 999999,
+            }}
+            onDelete={onDeleteSubtask}
+            onEdit={onEditSubtask}
+          />
           {data.map((subtask) => (
-            <Subtask key={subtask.id} subtask={subtask} />
+            <Subtask key={subtask.id} subtask={subtask} onDelete={onDeleteSubtask} onEdit={onEditSubtask} />
           ))}
         </div>,
         isCreateSubtaskMode ? (

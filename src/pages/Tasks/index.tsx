@@ -29,7 +29,7 @@ export default function () {
   ];
 
   const getTasks = () => {
-    Db.getTasks().then((data) => setData(data));
+    Db.getTasks().then(setData);
   };
 
   const handleConfirm = async (event: FormEvent<HTMLFormElement>) => {
@@ -85,6 +85,17 @@ export default function () {
       </Accordion>
 
       <div className='task-group'>
+        {/* TODO: Dev */}
+        <Task key={`a`} task={{
+          id: 999999,
+          backgroundColor: 'red',
+          createdAt: new Date().getTime(),
+          description: 'this is my description',
+          isCompleted: false,
+          title: 'My Title',
+          date: new Date().toJSON(),
+          markWeight: 1
+        }} onDelete={() => deleteTask(999999)} />
         {data.map((task) => (
           <Task key={`${task.id}:${task.createdAt}`} task={task} onDelete={() => deleteTask(task.id)} />
         ))}

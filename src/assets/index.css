@@ -65,10 +65,7 @@ body::-webkit-scrollbar {
   background-color: var(--color-green);
 }
 
-.bg-red:hover {
-  filter: brightness(105%);
-}
-
+.bg-red:hover,
 .bg-green:hover {
   filter: brightness(105%);
 }
@@ -168,9 +165,57 @@ header h1 {
 
 .task-group .task .subtask-group .subtask {
   color: var(--secondary-text-color);
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 1rem;
   margin-bottom: 0.25rem;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.task-group .task .subtask-group .subtask > .content {
+  flex-grow: 1;
+  padding: 0 0.25rem;
+}
+
+.task-group .task .subtask-group .subtask.edit > .content > textarea {
+  border: 0;
+  background-color: transparent;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+}
+
+.task-group .task .subtask-group .subtask.edit > .content > textarea,
+.task-group .task .subtask-group .subtask:hover {
   box-shadow: var(--shadow);
+}
+
+
+.task-group .task .subtask-group .subtask > .subtask-actions {
+  display: flex;
+  align-items: center;
+}
+
+.task-group .task .subtask-group .subtask > .subtask-actions > .action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-left: 0.25rem;
+}
+
+.task-group
+  .task
+  .subtask-group
+  .subtask
+  > .subtask-actions
+  > .action-icon:hover {
+  box-shadow: 0px 0px 6px #999;
 }
 
 button,
