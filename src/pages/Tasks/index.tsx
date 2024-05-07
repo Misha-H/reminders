@@ -10,6 +10,7 @@ import type { NewTask, Task as TaskType } from '~/db/schema/tasks';
 
 export default function () {
   const [data, setData] = useState<Awaited<ReturnType<(typeof Db)['getTasks']>>>([]);
+  const [doClose, setDoClose] = useState<boolean>(false);
   const newTaskFields: Array<FormFieldType> = [
     { id: 'title', label: 'Title', required: true },
     {
@@ -38,6 +39,8 @@ export default function () {
     const newTask = Object.fromEntries(formData.entries()) as unknown as NewTask;
     await Db.createTask(newTask);
     getTasks();
+    setDoClose(true);
+    setTimeout(() => setDoClose(false), 50);
   };
 
   const deleteTask = async (taskId: TaskType['id']) => {
@@ -55,6 +58,7 @@ export default function () {
       <Searchbar />
 
       <Accordion
+        doClose={doClose}
         isColoured
         isForm
         content={[
@@ -95,7 +99,7 @@ export default function () {
           title: 'My Title',
           date: new Date().toJSON(),
           markWeight: 1
-        }} onDelete={() => deleteTask(999999)} />
+        }} onDelete={() => {}} />
         {data.map((task) => (
           <Task key={`${task.id}:${task.createdAt}`} task={task} onDelete={() => deleteTask(task.id)} />
         ))}

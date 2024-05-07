@@ -13,7 +13,6 @@ export interface SubtaskProps {
   onEdit: (subtaskId: Subtask['id'], newDescription: Subtask['description']) => Promise<boolean>;
 }
 
-// TODO: We want to display icons for both delete and edit, when we edit, we want to edit in place, when we delete prompt user for confirmation
 export default function (props: SubtaskProps) {
   const { onDelete, onEdit, subtask } = props;
   const { description, id } = subtask;
@@ -25,14 +24,14 @@ export default function (props: SubtaskProps) {
     setValue((event.target as HTMLTextAreaElement).value);
   };
 
-  // TODO: Finish this so that icon hides on success (can get from parent promise)
   const handleOnDelete = () => {
-    onDelete(id);
+    onDelete(id).catch(console.error);
   };
 
-  // TODO: Finish this so that icon hides on success (can get from parent promise)
   const handleOnEdit = () => {
-    onEdit(id, value);
+    onEdit(id, value)
+      .then(() => setIsInEditMode(false))
+      .catch(console.error);
   };
 
   return (

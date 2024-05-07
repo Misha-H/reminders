@@ -7,21 +7,33 @@ import ChevronDown from './ChevronDown';
 import type { PropsWithChildren, ReactElement } from 'react';
 
 interface AccordianProps extends PropsWithChildren {
-  className?: string;
   content: Array<ReactElement>;
+  className?: string;
+  /** @default false */
+  doClose?: boolean;
   /** @default false */
   isColoured?: boolean;
   /** @default false */
   isForm?: boolean;
+  /** `value` is `true` when open, `false` when closed. */
+  onChange?: (value: boolean) => void;
 }
 
 export default function (props: AccordianProps) {
-  const { className, content, isColoured = false, isForm = false, children } = props;
+  const { content, className, doClose = false, isColoured = false, isForm = false, onChange = () => {}, children } = props;
+  const id = 'item-1';
   const hasContent = content.length > 0;
 
   return (
-    <Accordion.Root type='single' className={cls('accordion-root', isForm && 'form', isColoured && 'coloured', className)} collapsible>
-      <Accordion.Item value='item-1' className='accordion-item'>
+    <Accordion.Root
+      type='single'
+      className={cls('accordion-root', isForm && 'form', isColoured && 'coloured', className)}
+      collapsible
+      // TODO: Want to be able to programmatically close, but allow to open and close non-programatically also
+      defaultValue={doClose ? '__selected' : undefined}
+      onValueChange={(value) => onChange(value === id)}
+    >
+      <Accordion.Item value={id} className='accordion-item'>
         <Accordion.Header className='accordion-header'>
           <Accordion.Trigger className='accordion-trigger'>
             <div>{hasContent && <ChevronDown className='accordion-chevron' />}</div>

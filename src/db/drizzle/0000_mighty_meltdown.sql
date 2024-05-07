@@ -8,11 +8,11 @@ CREATE TABLE `contacts` (
 --> statement-breakpoint
 CREATE TABLE `subtasks` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`task_id` integer,
-	`description` text(1024),
+	`task_id` integer NOT NULL,
+	`description` text(1024) NOT NULL,
 	`is_completed` integer DEFAULT false NOT NULL,
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL,
-	FOREIGN KEY (`task_id`) REFERENCES `tasks`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`task_id`) REFERENCES `tasks`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `tasks` (

@@ -2,7 +2,7 @@ import { sql } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/sqlite-proxy';
 import Database from 'tauri-plugin-sql-api';
 
-import rawSql from '~/db/drizzle/0000_quick_roxanne_simpson.sql?raw';
+import rawSql from '~/db/drizzle/0000_mighty_meltdown.sql?raw';
 
 export class DbBase {
   private static name: string = 'tasks.db';
