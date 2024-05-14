@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 import { Accordion, FormField, Header, Searchbar, Task } from '~/components';
 import { Db } from '~/db/utils/Db';
@@ -10,7 +10,8 @@ import type { NewTask, Task as TaskType } from '~/db/schema/tasks';
 
 export default function () {
   const [data, setData] = useState<Awaited<ReturnType<(typeof Db)['getTasks']>>>([]);
-  const [doClose, setDoClose] = useState<boolean>(false);
+  const [filteredData, setFilteredData] = useState<Awaited<ReturnType<(typeof Db)['getTasks']>>>([]);
+  const [searchString, setSearchString] = useState<string>('');
   const newTaskFields: Array<FormFieldType> = [
     { id: 'title', label: 'Title', required: true },
     {
@@ -29,6 +30,25 @@ export default function () {
     { id: 'date', label: 'Date', type: 'date', required: true },
   ];
 
+  /**
+   * Only runs when `searchString` or `data` changes.
+   */
+  useMemo(() => {
+    const tasks = [...data];
+    const filteredTasks: TaskType[] = [];
+    const regex = new RegExp(searchString);
+
+    for (let i = 0; i < tasks.length; i++) {
+      const task = tasks[i];
+
+      if (searchString === '' || regex.test(task.title)) {
+        filteredTasks.push(task);
+      }
+    }
+
+    setFilteredData(filteredTasks);
+  }, [searchString, data]);
+
   const getTasks = () => {
     Db.getTasks().then(setData);
   };
@@ -39,8 +59,6 @@ export default function () {
     const newTask = Object.fromEntries(formData.entries()) as unknown as NewTask;
     await Db.createTask(newTask);
     getTasks();
-    setDoClose(true);
-    setTimeout(() => setDoClose(false), 50);
   };
 
   const deleteTask = async (taskId: TaskType['id']) => {
@@ -55,10 +73,9 @@ export default function () {
     <div className='tasks page'>
       <Header title='Tasks' />
 
-      <Searchbar />
+      <Searchbar handleSearch={setSearchString} />
 
       <Accordion
-        doClose={doClose}
         isColoured
         isForm
         content={[
@@ -90,17 +107,21 @@ export default function () {
 
       <div className='task-group'>
         {/* TODO: Dev */}
-        <Task key={`a`} task={{
-          id: 999999,
-          backgroundColor: 'red',
-          createdAt: new Date().getTime(),
-          description: 'this is my description',
-          isCompleted: false,
-          title: 'My Title',
-          date: new Date().toJSON(),
-          markWeight: 1
-        }} onDelete={() => {}} />
-        {data.map((task) => (
+        <Task
+          key={`a`}
+          task={{
+            id: 999999,
+            backgroundColor: 'red',
+            createdAt: new Date().getTime(),
+            description: 'this is my description',
+            isCompleted: false,
+            title: 'My Title',
+            date: new Date().toJSON(),
+            markWeight: 1,
+          }}
+          onDelete={() => {}}
+        />
+        {filteredData.map((task) => (
           <Task key={`${task.id}:${task.createdAt}`} task={task} onDelete={() => deleteTask(task.id)} />
         ))}
       </div>

@@ -12,6 +12,9 @@ import type { NewSubtask, Subtask } from '~/db/schema/subtasks';
 // TODO: Update db `tasks` table to allow the correct fields. (currently missing fields).
 
 export class Db {
+  /**
+   * There is a front-end search function which relies on all items being returned from the database.
+   */
   public static async getTasks() {
     return await DbBase.client.select().from(tasks);
   }

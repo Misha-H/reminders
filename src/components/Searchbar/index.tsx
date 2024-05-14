@@ -1,21 +1,18 @@
 import { Search } from '~/assets/icons';
-import  { FormField } from '~/components';
+import { FormField } from '~/components';
 
-import type { SyntheticEvent } from 'react';
 import type { FormFieldType } from '~/components';
 
-export default function () {
+export interface SearchbarProps {
+  handleSearch: FormFieldType['handler'];
+}
+
+export default function (props: SearchbarProps) {
+  const { handleSearch } = props;
   const searchField: FormFieldType = {
     id: 'searchbar',
     label: 'Search',
-    type: 'search'
-  }
-
-  // TODO: add function description
-  // TODO: this does not search anything currently
-  const handleSearch = (event: SyntheticEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { value } = event.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
-    const search = value.slice();
+    type: 'search',
   };
 
   return (
@@ -24,7 +21,7 @@ export default function () {
         <Search />
       </div>
       <div className='form-floating'>
-        <FormField {...searchField} onInput={handleSearch} />
+        <FormField {...searchField} handler={handleSearch} />
         <label htmlFor={searchField.id}>{searchField.label}</label>
       </div>
     </div>

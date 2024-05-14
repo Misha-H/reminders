@@ -11,9 +11,7 @@ export const tasks = sqliteTable('tasks', {
   markWeight: integer('mark_weight', { mode: 'number' }).notNull(),
   /** Stored as `'2020-01-31'` */
   date: text('date', { mode: 'text' }).notNull(),
-  isCompleted: integer('is_completed', { mode: 'boolean' })
-    .notNull()
-    .default(false),
+  isCompleted: integer('is_completed', { mode: 'boolean' }).notNull().default(false),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
     .$type<number>()

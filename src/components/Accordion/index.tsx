@@ -10,17 +10,13 @@ interface AccordianProps extends PropsWithChildren {
   content: Array<ReactElement>;
   className?: string;
   /** @default false */
-  doClose?: boolean;
-  /** @default false */
   isColoured?: boolean;
   /** @default false */
   isForm?: boolean;
-  /** `value` is `true` when open, `false` when closed. */
-  onChange?: (value: boolean) => void;
 }
 
 export default function (props: AccordianProps) {
-  const { content, className, doClose = false, isColoured = false, isForm = false, onChange = () => {}, children } = props;
+  const { content, className, isColoured = false, isForm = false, children } = props;
   const id = 'item-1';
   const hasContent = content.length > 0;
 
@@ -29,9 +25,6 @@ export default function (props: AccordianProps) {
       type='single'
       className={cls('accordion-root', isForm && 'form', isColoured && 'coloured', className)}
       collapsible
-      // TODO: Want to be able to programmatically close, but allow to open and close non-programatically also
-      defaultValue={doClose ? '__selected' : undefined}
-      onValueChange={(value) => onChange(value === id)}
     >
       <Accordion.Item value={id} className='accordion-item'>
         <Accordion.Header className='accordion-header'>
