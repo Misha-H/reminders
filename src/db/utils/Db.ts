@@ -1,13 +1,15 @@
-import { eq, sql } from 'drizzle-orm';
+import { eq, sql, desc } from 'drizzle-orm';
 
 import { contacts } from '~/db/schema/contacts';
 import { tasks } from '~/db/schema/tasks';
 import { subtasks } from '~/db/schema/subtasks';
+import { timetables } from '../schema/timetables';
 import { DbBase } from '~/db/utils/DbBase';
 
 import type { NewContact, Contact } from '~/db/schema/contacts';
-import type { NewTask, Task } from '~/db/schema/tasks';
 import type { NewSubtask, Subtask } from '~/db/schema/subtasks';
+import type { NewTask, Task } from '~/db/schema/tasks';
+import type { NewTimetable } from '../schema/timetables';
 
 // TODO: Update db `tasks` table to allow the correct fields. (currently missing fields).
 
@@ -61,6 +63,14 @@ export class Db {
 
   public static async updateContact(values: Partial<Contact>) {
     return await DbBase.client.update(contacts).set(values);
+  }
+
+  public static async getLatestTimetable() {
+    return await DbBase.client.select().from(timetables).orderBy(desc(timetables.createdAt)).limit(1);
+  }
+
+  public static async createTimetable(values: NewTimetable) {
+    return await DbBase.client.insert(timetables).values(values);
   }
 
   public static async doesContactPhoneExist(phone: Contact['phone']) {
