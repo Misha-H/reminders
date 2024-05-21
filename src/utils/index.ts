@@ -49,7 +49,7 @@ export function cls(...list: (boolean | string | undefined)[]): HTMLAttributes<H
 
   for (let i = 0; i < list.length; i++) {
     const value = list[i];
-    if (typeof value === 'string') {
+    if (typeof value === 'string' && value.length > 0) {
       className.push(value);
     }
   }

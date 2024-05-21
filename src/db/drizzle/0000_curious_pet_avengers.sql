@@ -26,4 +26,10 @@ CREATE TABLE `tasks` (
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE `timetables` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`image` text,
+	`created_at` integer DEFAULT (unixepoch()) NOT NULL
+);
+--> statement-breakpoint
 CREATE UNIQUE INDEX `contacts_phone_unique` ON `contacts` (`phone`);

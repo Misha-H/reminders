@@ -66,7 +66,7 @@ export class Db {
   }
 
   public static async getLatestTimetable() {
-    return await DbBase.client.select().from(timetables).orderBy(desc(timetables.createdAt)).limit(1);
+    return (await DbBase.client.select().from(timetables).orderBy(desc(timetables.createdAt)).limit(1))[0];
   }
 
   public static async createTimetable(values: NewTimetable) {

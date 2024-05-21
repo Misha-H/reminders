@@ -1,14 +1,15 @@
 import { sql } from 'drizzle-orm';
-import { integer, sqliteTable, blob } from 'drizzle-orm/sqlite-core';
+import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
-import type { InferSelectModel, InferInsertModel } from 'drizzle-orm';
+import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
 
 /**
- * TODO: Delete and restart dataabse so that this new table takes effect.
+ * Stores all uploaded files, leaving room to add functionality to revert to prevous image.
  */
 export const timetables = sqliteTable('timetables', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  image: blob('image', { mode: 'buffer' }),
+  /** base64 encoding. */
+  image: text('image', { mode: 'text' }),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
     .$type<number>()
