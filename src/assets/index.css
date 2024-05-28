@@ -488,7 +488,16 @@ label {
  * Button
  * TODO: Left off here, This is not the best styling thats been done
  */
-.file-btn {
+.file-group {
+}
+
+.file-group > label,
+.file-group > label > input[type='file'] {
+  width: 100%;
+}
+
+.file-group > label > input[type='file'] {
+  flex-grow: 1;
   align-items: center;
   border-radius: 0.25rem;
   box-shadow: var(--shadow);
