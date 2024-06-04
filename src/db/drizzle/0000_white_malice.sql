@@ -28,7 +28,8 @@ CREATE TABLE `tasks` (
 --> statement-breakpoint
 CREATE TABLE `timetables` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`image` text,
+	`data_uri` text,
+	`is_pdf` integer,
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL
 );
 --> statement-breakpoint

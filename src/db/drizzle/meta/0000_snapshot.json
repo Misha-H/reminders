@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "bd32699a-1492-4329-a40d-a5f88a743c99",
+  "id": "166e1f90-f5c9-4f7e-b147-c9838b158a16",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "contacts": {
@@ -194,9 +194,16 @@
           "notNull": true,
           "autoincrement": true
         },
-        "image": {
-          "name": "image",
+        "data_uri": {
+          "name": "data_uri",
           "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "is_pdf": {
+          "name": "is_pdf",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

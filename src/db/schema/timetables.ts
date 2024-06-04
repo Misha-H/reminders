@@ -9,7 +9,8 @@ import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
 export const timetables = sqliteTable('timetables', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   /** base64 encoding. */
-  image: text('image', { mode: 'text' }),
+  dataUri: text('data_uri', { mode: 'text' }),
+  isPdf: integer('is_pdf', { mode: 'boolean' }),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
     .$type<number>()
