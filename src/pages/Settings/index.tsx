@@ -21,11 +21,11 @@ export default function () {
                     label={field.label}
                     type={field.type}
                     enum={field.enum}
-                    defaultValue={settings[group.id][field.id].value}
+                    value={settings[group.id][field.id].value}
                     handler={(data) => {
                       updateSettings(group.id, field.id, field.var, data);
                     }}
-                  />
+                  />,
                 ]}
               >
                 <div className='container'>

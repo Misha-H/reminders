@@ -1,21 +1,21 @@
-import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
 
 /**
- * Stores all uploaded files, leaving room to add functionality to revert to prevous image.
+ * Stores latest upload file only.
+ * NOTE: This table should only ever contain a single row.
  */
 export const timetables = sqliteTable('timetables', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   /** base64 encoding. */
   dataUri: text('data_uri', { mode: 'text' }),
   isPdf: integer('is_pdf', { mode: 'boolean' }),
-  createdAt: integer('created_at', { mode: 'timestamp' })
-    .notNull()
-    .$type<number>()
-    .default(sql`(unixepoch())`),
 });
+
+// This is the only row ID in the table that should be interacted with
+// This should always be 1
+export const timetableId = 1;
 
 export type Timetable = InferSelectModel<typeof timetables>;
 

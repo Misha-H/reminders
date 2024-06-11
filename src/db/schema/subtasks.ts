@@ -5,7 +5,6 @@ import { tasks } from './tasks';
 
 import type { InferSelectModel, InferInsertModel } from 'drizzle-orm';
 
-// TODO: Update date to generate timestamp
 export const subtasks = sqliteTable('subtasks', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   taskId: integer('task_id')

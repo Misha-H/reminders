@@ -1,17 +1,15 @@
-import { eq, sql, desc } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
 import { contacts } from '~/db/schema/contacts';
-import { tasks } from '~/db/schema/tasks';
 import { subtasks } from '~/db/schema/subtasks';
-import { timetables } from '../schema/timetables';
+import { tasks } from '~/db/schema/tasks';
 import { DbBase } from '~/db/utils/DbBase';
+import { timetableId, timetables } from '../schema/timetables';
 
-import type { NewContact, Contact } from '~/db/schema/contacts';
+import type { Contact, NewContact } from '~/db/schema/contacts';
 import type { NewSubtask, Subtask } from '~/db/schema/subtasks';
 import type { NewTask, Task } from '~/db/schema/tasks';
-import type { NewTimetable } from '../schema/timetables';
-
-// TODO: Update db `tasks` table to allow the correct fields. (currently missing fields).
+import type { NewTimetable, Timetable } from '../schema/timetables';
 
 export class Db {
   /**
@@ -34,7 +32,10 @@ export class Db {
   }
 
   public static async getSubtasks(taskId: Task['id']) {
-    return await DbBase.client.select().from(subtasks).where(eq(subtasks.taskId, taskId));
+    return await DbBase.client
+      .select()
+      .from(subtasks)
+      .where(eq(subtasks.taskId, taskId));
   }
 
   public static async createSubtask(values: NewSubtask) {
@@ -45,8 +46,14 @@ export class Db {
     return await DbBase.client.delete(subtasks).where(eq(subtasks.id, id));
   }
 
-  public static async updateSubtask(id: Subtask['id'], values: Partial<Subtask>) {
-    return await DbBase.client.update(subtasks).set(values).where(eq(subtasks.id, id));
+  public static async updateSubtask(
+    id: Subtask['id'],
+    values: Partial<Subtask>
+  ) {
+    return await DbBase.client
+      .update(subtasks)
+      .set(values)
+      .where(eq(subtasks.id, id));
   }
 
   public static async getContacts() {
@@ -65,12 +72,29 @@ export class Db {
     return await DbBase.client.update(contacts).set(values);
   }
 
-  public static async getLatestTimetable() {
-    return (await DbBase.client.select().from(timetables).orderBy(desc(timetables.createdAt)).limit(1))[0];
+  public static async getTimetable() {
+    const timetable: Timetable | undefined = (
+      await DbBase.client
+        .select()
+        .from(timetables)
+        .where(eq(timetables.id, timetableId))
+    )[0];
+
+    // Create the single timetable record if it doesn't already exist
+    if (!timetable) {
+      // `id` is set by the database, and should be equal to 1 (`timetableId`)
+      // We will use the the created timetable record
+      await DbBase.client.insert(timetables).values({});
+    }
+
+    return timetable as Timetable | undefined;
   }
 
-  public static async createTimetable(values: NewTimetable) {
-    return await DbBase.client.insert(timetables).values(values);
+  public static async updateTimetable(values: NewTimetable) {
+    return await DbBase.client
+      .update(timetables)
+      .set(values)
+      .where(eq(timetables.id, timetableId));
   }
 
   public static async doesContactPhoneExist(phone: Contact['phone']) {
@@ -83,6 +107,8 @@ export class Db {
       return result[0].count;
     }
 
-    throw new Error('Unexpected result from database at `doesContactPhoneExist`.');
+    throw new Error(
+      'Unexpected result from database at `doesContactPhoneExist`.'
+    );
   }
 }

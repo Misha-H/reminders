@@ -12,6 +12,18 @@ export default function () {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const whitelistFormats = ['image/png', 'image/jpeg', 'application/pdf'];
 
+  const handleReset = async () => {
+    try {
+      // Remove upload by overwriting the current timetable data
+      await Db.updateTimetable({ dataUri: null, isPdf: null });
+      // Update UI with the new timetable image
+      setFileSrc('');
+      setIsPdf(false);
+    } catch (error) {
+      console.error('Error resetting timetable.');
+    }
+  };
+
   const handleUpload: InputHTMLAttributes<HTMLInputElement>['onChange'] = (event) => {
     // Get the first potential file
     const file = event.target.files?.[0];
@@ -33,7 +45,7 @@ export default function () {
         // Always return a string or undefined (we do not want to handle an ArrayBuffer because <img> does not support it)
         const dataUri = result instanceof ArrayBuffer ? new TextDecoder('utf-8').decode(result) : result;
         // Update database with the new timetable image
-        await Db.createTimetable({ dataUri, isPdf });
+        await Db.updateTimetable({ dataUri, isPdf });
         // Update UI with the new timetable image
         setFileSrc(dataUri);
       } catch (error) {
@@ -47,7 +59,12 @@ export default function () {
 
   // On load, set the preview to the lastest stored timetable image
   useEffect(() => {
-    Db.getLatestTimetable().then(({ dataUri, isPdf }) => {
+    Db.getTimetable().then((rows) => {
+      if (!rows) {
+        return;
+      }
+
+      const { dataUri, isPdf } = rows;
       dataUri && setFileSrc(dataUri);
       isPdf && setIsPdf(isPdf);
     });
@@ -68,7 +85,6 @@ export default function () {
 
       <form>
         <div className='file-group'>
-          {/* TODO: Remove if not accepting PDF */}
           <canvas ref={canvasRef}></canvas>
 
           <label>
@@ -81,7 +97,9 @@ export default function () {
       {dataUri && isPdf && <object data={dataUri} type='application/pdf' className='img-preview'></object>}
 
       <div className='actions'>
-        <button className='bg-red fit'>Reset</button>
+        <button className='bg-red fit' onClick={handleReset}>
+          Reset
+        </button>
       </div>
     </div>
   );

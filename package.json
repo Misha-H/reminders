@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "db:generate": "drizzle-kit generate:sqlite --config=./src/db/drizzle.config.ts",
+    "db:drop": "powershell rm ~/AppData/Roaming/com.tauri.dev/tasks.db",
     "tauri": "tauri"
   },
   "dependencies": {

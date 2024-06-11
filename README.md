@@ -1,6 +1,6 @@
 # reminders
 
-TODO: Description + Add to GitHub.
+A simple yet powerful reminders app designed to keep you organised.
 
 ## Repository
 
